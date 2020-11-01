@@ -7361,6 +7361,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C3" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1" value=".1 uF"/>
 <part name="C4" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1"/>
 <part name="U$2" library="microbuilder" deviceset="GND" device=""/>
+<part name="P+1" library="supply1" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7462,6 +7463,9 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </instance>
 <instance part="U$2" gate="G$1" x="24.13" y="-6.35" smashed="yes">
 <attribute name="VALUE" x="22.606" y="-8.89" size="1.27" layer="96"/>
+</instance>
+<instance part="P+1" gate="1" x="16.51" y="27.94" smashed="yes">
+<attribute name="VALUE" x="19.05" y="27.94" size="1.778" layer="96"/>
 </instance>
 </instances>
 <busses>
@@ -7636,6 +7640,16 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="111.76" y1="25.4" x2="111.76" y2="22.86" width="0.1524" layer="91"/>
 <wire x1="113.03" y1="25.4" x2="113.03" y2="27.94" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="U1" gate="G$1" pin="8"/>
+<pinref part="C3" gate="G$1" pin="1"/>
+<wire x1="17.78" y1="12.7" x2="17.78" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="17.78" y1="17.78" x2="25.4" y2="17.78" width="0.1524" layer="91"/>
+<pinref part="P+1" gate="1" pin="+5V"/>
+<wire x1="16.51" y1="25.4" x2="16.51" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="16.51" y1="17.78" x2="17.78" y2="17.78" width="0.1524" layer="91"/>
+<junction x="17.78" y="17.78"/>
+</segment>
 </net>
 <net name="+3V3" class="0">
 <segment>
@@ -7671,14 +7685,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-48.26" y1="7.62" x2="-39.37" y2="7.62" width="0.1524" layer="91"/>
 <wire x1="-39.37" y1="7.62" x2="-39.37" y2="20.32" width="0.1524" layer="91"/>
 <label x="-38.1" y="17.78" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$4" class="0">
-<segment>
-<pinref part="U1" gate="G$1" pin="8"/>
-<pinref part="C3" gate="G$1" pin="1"/>
-<wire x1="17.78" y1="12.7" x2="17.78" y2="17.78" width="0.1524" layer="91"/>
-<wire x1="17.78" y1="17.78" x2="25.4" y2="17.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="VI_OUT" class="0">
