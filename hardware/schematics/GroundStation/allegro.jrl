@@ -1,0 +1,15 @@
+\t (00:00:19) allegro 17.4 S010 Windows SPB 64-bit Edition
+\t (00:00:19)     Journal start - Sun Dec 13 16:38:23 2020
+\t (00:00:19)         Host=HP-ENVY-13T User=cleat Pid=15416 CPUs=8
+\t (00:00:19) CmdLine= c:\cadence\spb_17.4\tools\bin\allegro.exe C:\Users\cleat\Documents\EAGLE\projects\GroundStation\Ground_Station_Board.brd
+\t (00:00:19) 
+   (00:00:20) Loading axlcore.cxt 
+\t (00:00:21) Opening existing design...
+\e (00:00:21) ERROR(SPMHDB-238): The design is corrupted. It may have been copied from a different architecture using ASCII mode; copy using binary mode.
+\e (00:00:21) ERROR(SPMHDB-238): The design is corrupted. It may have been copied from a different architecture using ASCII mode; copy using binary mode.
+\i (00:00:27) fillin confirm
+\t (00:00:27) Starting new design...
+\i (00:00:28) trapsize 116667
+\i (00:00:29) generaledit 
+\i (00:00:31) exit 
+\t (00:00:32)     Journal end - Sun Dec 13 16:38:37 2020
