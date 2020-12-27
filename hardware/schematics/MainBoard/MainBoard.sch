@@ -7077,7 +7077,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <part name="R3" library="adafruit(seeIMUBreakout)" deviceset="R-US_" device="R0805"/>
 <part name="R4" library="adafruit(seeIMUBreakout)" deviceset="R-US_" device="R0805"/>
 <part name="GND8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="J1" library="T2M-105-01-X-D-TH-WT" deviceset="T2M-105-01-X-D-TH-WT" device=""/>
+<part name="SAMTEC_CONNECTOR" library="T2M-105-01-X-D-TH-WT" deviceset="T2M-105-01-X-D-TH-WT" device=""/>
 <part name="GND7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="XB1" library="xbee" deviceset="XBEE" device="-PRO"/>
 <part name="U$1" library="adafruit(seeIMUBreakout)" deviceset="IMU_BREAKOUT" device=""/>
@@ -7199,7 +7199,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <instance part="GND8" gate="1" x="33.02" y="33.02" smashed="yes">
 <attribute name="VALUE" x="30.48" y="30.48" size="1.778" layer="96"/>
 </instance>
-<instance part="J1" gate="G$1" x="104.14" y="43.18" smashed="yes">
+<instance part="SAMTEC_CONNECTOR" gate="G$1" x="104.14" y="43.18" smashed="yes">
 <attribute name="NAME" x="96.52" y="52.07" size="1.778" layer="95"/>
 <attribute name="VALUE" x="96.52" y="34.29" size="1.778" layer="96" align="top-left"/>
 </instance>
@@ -7260,7 +7260,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <label x="83.82" y="-83.82" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="03"/>
+<pinref part="SAMTEC_CONNECTOR" gate="G$1" pin="03"/>
 <wire x1="91.44" y1="45.72" x2="83.82" y2="45.72" width="0.1524" layer="91"/>
 <label x="78.74" y="45.72" size="1.778" layer="95"/>
 </segment>
@@ -7354,7 +7354,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <junction x="33.02" y="43.18"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="04"/>
+<pinref part="SAMTEC_CONNECTOR" gate="G$1" pin="04"/>
 <wire x1="116.84" y1="45.72" x2="132.08" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="132.08" y1="45.72" x2="132.08" y2="40.64" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
@@ -7493,7 +7493,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 </net>
 <net name="5V" class="0">
 <segment>
-<pinref part="J1" gate="G$1" pin="02"/>
+<pinref part="SAMTEC_CONNECTOR" gate="G$1" pin="02"/>
 <wire x1="116.84" y1="48.26" x2="124.46" y2="48.26" width="0.1524" layer="91"/>
 <label x="124.46" y="48.26" size="1.778" layer="95"/>
 </segment>
@@ -7512,7 +7512,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <label x="81.28" y="-101.6" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="10"/>
+<pinref part="SAMTEC_CONNECTOR" gate="G$1" pin="10"/>
 <wire x1="116.84" y1="38.1" x2="121.92" y2="38.1" width="0.1524" layer="91"/>
 <label x="119.38" y="38.1" size="1.778" layer="95"/>
 </segment>
@@ -7558,7 +7558,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <label x="81.28" y="-104.14" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="08"/>
+<pinref part="SAMTEC_CONNECTOR" gate="G$1" pin="08"/>
 <wire x1="116.84" y1="40.64" x2="121.92" y2="40.64" width="0.1524" layer="91"/>
 <label x="119.38" y="40.64" size="1.778" layer="95"/>
 </segment>
@@ -7570,7 +7570,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <label x="81.28" y="-106.68" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J1" gate="G$1" pin="06"/>
+<pinref part="SAMTEC_CONNECTOR" gate="G$1" pin="06"/>
 <wire x1="116.84" y1="43.18" x2="121.92" y2="43.18" width="0.1524" layer="91"/>
 <label x="116.84" y="43.18" size="1.778" layer="95"/>
 </segment>
