@@ -7211,9 +7211,7 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <attribute name="VALUE" x="30.48" y="-45.72" size="1.778" layer="96" font="vector"/>
 </instance>
 <instance part="U$1" gate="G$1" x="91.44" y="-30.48" smashed="yes"/>
-<instance part="P+4" gate="VCC" x="127" y="-25.4" smashed="yes">
-<attribute name="VALUE" x="124.46" y="-27.94" size="1.778" layer="96" rot="R90"/>
-</instance>
+<instance part="P+4" gate="VCC" x="127" y="-25.4" smashed="yes"/>
 <instance part="GND4" gate="1" x="127" y="-45.72" smashed="yes">
 <attribute name="VALUE" x="124.46" y="-48.26" size="1.778" layer="96"/>
 </instance>
@@ -7258,6 +7256,10 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <wire x1="83.82" y1="-91.44" x2="83.82" y2="-86.36" width="0.1524" layer="91"/>
 <pinref part="P+3" gate="VCC" pin="VCC"/>
 <label x="83.82" y="-83.82" size="1.778" layer="95"/>
+<pinref part="TEENSY4.1" gate="G$1" pin="3.3V@1"/>
+<wire x1="73.66" y1="-99.06" x2="83.82" y2="-99.06" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="-99.06" x2="83.82" y2="-91.44" width="0.1524" layer="91"/>
+<junction x="83.82" y="-91.44"/>
 </segment>
 <segment>
 <pinref part="SAMTEC_CONNECTOR" gate="G$1" pin="03"/>
@@ -7284,9 +7286,9 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <label x="78.74" y="-7.62" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="TEENSY4.1" gate="G$1" pin="D1"/>
-<wire x1="27.94" y1="-99.06" x2="22.86" y2="-99.06" width="0.1524" layer="91"/>
-<label x="12.7" y="-99.06" size="1.778" layer="95"/>
+<pinref part="TEENSY4.1" gate="G$1" pin="D0"/>
+<wire x1="27.94" y1="-96.52" x2="22.86" y2="-96.52" width="0.1524" layer="91"/>
+<label x="12.7" y="-96.52" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GPS_RX" class="0">
@@ -7296,9 +7298,9 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <label x="121.92" y="2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="TEENSY4.1" gate="G$1" pin="D0"/>
-<wire x1="27.94" y1="-96.52" x2="22.86" y2="-96.52" width="0.1524" layer="91"/>
-<label x="12.7" y="-96.52" size="1.778" layer="95"/>
+<pinref part="TEENSY4.1" gate="G$1" pin="D1"/>
+<wire x1="27.94" y1="-99.06" x2="22.86" y2="-99.06" width="0.1524" layer="91"/>
+<label x="12.7" y="-99.06" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7379,14 +7381,14 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 </net>
 <net name="XBEE_TX" class="0">
 <segment>
-<wire x1="27.94" y1="-2.54" x2="20.32" y2="-2.54" width="0.1524" layer="91"/>
-<label x="10.16" y="-2.54" size="1.778" layer="95"/>
-<pinref part="XB1" gate="G$1" pin="DIN/!CONFIG"/>
-</segment>
-<segment>
 <pinref part="TEENSY4.1" gate="G$1" pin="D7"/>
 <wire x1="27.94" y1="-114.3" x2="22.86" y2="-114.3" width="0.1524" layer="91"/>
 <label x="12.7" y="-114.3" size="1.778" layer="95"/>
+</segment>
+<segment>
+<wire x1="27.94" y1="-5.08" x2="20.32" y2="-5.08" width="0.1524" layer="91"/>
+<label x="10.16" y="-5.08" size="1.778" layer="95"/>
+<pinref part="XB1" gate="G$1" pin="DOUT"/>
 </segment>
 </net>
 <net name="XBEE_RST" class="0">
@@ -7408,9 +7410,9 @@ Source: MaxStream, Inc. xbee_productmanual.pdf</description>
 <label x="12.7" y="-116.84" size="1.778" layer="95"/>
 </segment>
 <segment>
-<wire x1="27.94" y1="-5.08" x2="20.32" y2="-5.08" width="0.1524" layer="91"/>
-<label x="10.16" y="-5.08" size="1.778" layer="95"/>
-<pinref part="XB1" gate="G$1" pin="DOUT"/>
+<wire x1="27.94" y1="-2.54" x2="20.32" y2="-2.54" width="0.1524" layer="91"/>
+<label x="10.16" y="-2.54" size="1.778" layer="95"/>
+<pinref part="XB1" gate="G$1" pin="DIN/!CONFIG"/>
 </segment>
 </net>
 <net name="XBEE_EN" class="0">
