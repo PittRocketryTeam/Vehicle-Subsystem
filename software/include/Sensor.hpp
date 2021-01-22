@@ -14,14 +14,14 @@ public:
 
     }
 
-    void poll
+    void poll(state* st)
     {
         // ask the sensor for new data
         // library calls to communicate with the sensor are made here
         // 
     }
 
-    MySpecificPacket read()
+    void read(state* st)
     {
 
     }
