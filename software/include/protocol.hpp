@@ -3,7 +3,20 @@
 
 #include <cstdint>
 
-#define COMMAND NAME 0
+typedef struct _state
+{
+    float temp;
+    float vbat;
+    float pressure;
+    float altitude;
+    float lat;
+    float lon;
+    int main_deploy;
+    int drogue_deploy;
+    int launch_detect;
+    int payload_pre;
+    int payload_dep;
+} state;
 
 typedef struct _HEALTH_PKT // voltages, current draw
 {
