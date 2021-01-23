@@ -22,7 +22,7 @@ GPS::~GPS()
 
 }
 
-bool GPS::init()
+void GPS::init()
 {
     pinMode(GPS_ENABLE, OUTPUT);
 
@@ -76,8 +76,6 @@ bool GPS::init()
 
     // Request updates on antenna status, comment out to keep quiet
     gps.sendCommand(PGCMD_ANTENNA);
-
-    return true;
 }
 
 void GPS::internal_read()
@@ -85,9 +83,9 @@ void GPS::internal_read()
     gps.read();
 }
 
-Data GPS::read(Data data)
+void GPS::read(state* st)
 {
-    data.gpsData.time = my_time;
+    /*data.gpsData.time = my_time;
     data.gpsData.latitude = my_lat;
     data.gpsData.lat_direction = my_lat_direction;
     data.gpsData.longitude = my_lon;
@@ -96,28 +94,26 @@ Data GPS::read(Data data)
     data.gpsData.number_of_satellites = my_number_of_satellites;
     data.gpsData.hdop = my_hdop;
     data.gpsData.altitude = my_alt;
-    data.gpsData.rssi = my_rssi; 
-
-    return data;
+    data.gpsData.rssi = my_rssi;*/
 }
 
-Data GPS::poll(Data data)
+void GPS::poll(state* st)
 {
     if (gps.newNMEAreceived())
     {
         gps.parse(gps.lastNMEA());
     }
 
-    my_fix_quality = gps.fixquality;
+    /*my_fix_quality = gps.fixquality;
     my_time = gps.seconds;
     my_number_of_satellites = gps.satellites;
     my_lat = gps.latitude;
     my_lon = gps.longitude;
     my_alt = gps.altitude;
     //my_rssi = atoi(gps.lastNMEA());
-    my_hdop = gps.HDOP;
+    my_hdop = gps.HDOP;*/
 
-    return read(data);
+    read(st);
 }
 
 void GPS::enable()

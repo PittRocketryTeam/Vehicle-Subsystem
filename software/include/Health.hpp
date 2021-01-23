@@ -21,11 +21,11 @@ class Health : public Sensor
         Health();
         ~Health();
             
-        bool init() override;
-        void read(state*) override;
-        void poll(state*) override;
-        void enable() override;
-        void disable() override;
+        virtual void init();
+        virtual void read(state*);
+        virtual void poll(state*);
+        virtual void enable();
+        virtual void disable();
 
     private:
         float calculate_voltage(int, float, float);

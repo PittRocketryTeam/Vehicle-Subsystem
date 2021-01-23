@@ -14,12 +14,12 @@ class GPS : public Sensor
         GPS();
         virtual ~GPS();
         
-        bool init() override;
-        void internal_read();
-        Data read(Data data) override;
-        Data poll(Data data) override;
-        void enable() override;
-        void disable() override;
+        virtual void init();
+        virtual void internal_read();
+        virtual void read(state*);
+        virtual void poll(state*);
+        virtual void enable();
+        virtual void disable();
 
 
 

@@ -1,4 +1,4 @@
-#include "Xbee.hpp"
+#include "XBee.hpp"
 #include "Error.hpp"
 #include <cstring>
 
@@ -32,7 +32,7 @@ void XBee::transmit()
     //Serial4.flush();
 }
 
-void XBee::setCachedData(Data newData)
+/*void XBee::setCachedData(Data newData)
 {
     formattedData = "";
 
@@ -60,9 +60,9 @@ void XBee::setCachedData(Data newData)
     formattedData += String(newData.healthData.reg_5V_battery_voltage) + ",";
 
     //formattedData += "";
-}
+}*/
 
-Data XBee::receive()
+/*(Data XBee::receive()
 {
     if (Serial4.available())
     {
@@ -79,7 +79,7 @@ Data XBee::receive()
 
     Data d;
     return d;
-}
+}*/
 
 int XBee::getModeFromGC()
 {

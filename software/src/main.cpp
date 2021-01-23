@@ -1,29 +1,39 @@
 #include <Arduino.h>
 #include "protocol.hpp"
+#include "GPS.hpp"
+#include "XBee.h"
+#include "IMU.hpp"
+#include "Logger.hpp"
+#include "Altimeter.hpp"
 
-typedef enum {IDLE = 0, STARTUP = 1, FAIL = 2} mode_t;
+enum fcmode_t {IDLE = 0, STARTUP = 1, FAIL = 2};
 
+static Logger lgr;
 static state st;
 static XBee tx;
 static GPS gps;
-static IMU imu;
+static IMU ag;
 static Altimeter alt;
-static mode_t mode;
+static fcmode_t mode;
 static IntervalTimer gps_int;
 static bool transition;
 
 void serial_init()
 {
     Serial.begin(9600);
-    for (int i = 0; i < CONN_ATTEMPTS; ++i)
+    int i;
+    for (i = 0; i < CONN_ATTEMPTS; ++i)
     {
         if (Serial)
         {
             break;
         }
 
+        digitalWrite(13, HIGH);
         Error::on(SERIAL_INIT);
-        delay(CONN_DELAY * 3);
+        delay(CONN_DELAY);
+        digitalWrite(13, LOW);
+        delay(CONN_DELAY);
     }
     Error::off();
     if (i >= CONN_ATTEMPTS)
@@ -32,8 +42,19 @@ void serial_init()
     }
 }
 
-int setup()
+void gps_read_callback()
 {
+    gps.internal_read();
+}
+
+void setup()
+{
+    pinMode(13, OUTPUT);
+    digitalWrite(13, HIGH);
+    delay(1000);
+    digitalWrite(13, LOW);
+    delay(1000);
+
     memset(&st, 0, sizeof(state));      // zero system state
     mode = IDLE;
     transition = false;
@@ -41,7 +62,10 @@ int setup()
     Error::init();
     serial_init();
 
-    imu.init();
+    lgr.init();
+    //lgr.flush();
+
+    ag.init();
     alt.init();
 
     gps.init();
@@ -52,11 +76,6 @@ int setup()
     Error::summary();
 
     // set timers
-}
-
-void gps_read_callback()
-{
-    gps.internal_read();
 }
 
 void idle_transition()
@@ -79,8 +98,9 @@ void startup()
 
 }
 
-int loop()
+void loop()
 {   
+    digitalWrite(13, HIGH);
     if (transition)
     {
         transition = false;
@@ -113,4 +133,6 @@ int loop()
         case FAIL:
         break;
     }
+
+    digitalWrite(13, LOW);
 }

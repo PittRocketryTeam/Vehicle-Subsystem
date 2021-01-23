@@ -3,28 +3,31 @@
 
 #include <vector>
 #include "Wire.h"
-#include "Data.hpp"
+#include "protocol.hpp"
 
 class Sensor
 {
 public:
 
-    void init()
+    virtual void init()
     {
 
     }
 
-    void poll(state* st)
+    virtual void poll(state* st)
     {
         // ask the sensor for new data
         // library calls to communicate with the sensor are made here
         // 
     }
 
-    void read(state* st)
+    virtual void read(state* st)
     {
 
     }
+
+    virtual void enable() = 0;
+    virtual void disable() = 0;
 };
 
 #endif

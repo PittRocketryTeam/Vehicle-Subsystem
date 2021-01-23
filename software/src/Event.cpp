@@ -18,5 +18,5 @@ void Event::infer(state* st)
 
 event_t Event::getCurrentEvent()
 {
-    
+    return m_cur;
 }

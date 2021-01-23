@@ -16,7 +16,7 @@ Health::~Health()
 
 }
 
-bool Health::init()
+void Health::init()
 {
     analogReadResolution(10);
     analogReference(0);
@@ -24,7 +24,6 @@ bool Health::init()
     pinMode(BATT_V, INPUT);
     pinMode(REG5_V, INPUT);
     pinMode(REG3_V, INPUT);
-    return true;
 }
 
 
@@ -35,10 +34,10 @@ void Health::read(state* st)
         return;
     }
 
-    data.healthData.main_battery_temperature = battery_temperature;
+    /*data.healthData.main_battery_temperature = battery_temperature;
     data.healthData.main_battery_voltage = battery_voltage;
     data.healthData.reg_5V_battery_voltage = reg5_voltage;
-    data.healthData.reg_3V3_battery_voltage = reg3_voltage;
+    data.healthData.reg_3V3_battery_voltage = reg3_voltage;*/
 }
 
 void Health::poll(state* st)

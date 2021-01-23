@@ -17,11 +17,11 @@ class Altimeter : public Sensor
         Altimeter();
         ~Altimeter();
         
-        virtual bool init();
-        void read(state* data) override;
-        void poll(state* data) override;
-        void enable() override;
-        void disable() override;
+        virtual void init();
+        virtual void read(state* data);
+        virtual void poll(state* data);
+        virtual void enable();
+        virtual void disable();
 
     private:
 

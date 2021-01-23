@@ -1,5 +1,5 @@
 #include "IMU.hpp"
-#include "board.hpp"
+#include "config.hpp"
 #include "Error.hpp"
 
 
@@ -21,7 +21,7 @@ IMU::~IMU()
     //delete last_data;
 }
 
-bool IMU::init()
+void IMU::init()
 {
 
     int i;
@@ -42,7 +42,7 @@ bool IMU::init()
     Error::off();
     if (i >= CONN_ATTEMPTS)
     {
-        Serial.println("BAD");
+        Serial.println("cannot connect to imu");
         Error::display(IMU_INIT, FATAL);
     }
 
@@ -50,11 +50,11 @@ bool IMU::init()
 
     enable();
 
-    return false;
 }
 
 void IMU::read(state* st)
 {
+    /*
     data.imuData.euler_abs_orientation_x = ox;
     data.imuData.euler_abs_orientation_y = oy;
     data.imuData.euler_abs_orientation_z = oz;
@@ -62,8 +62,7 @@ void IMU::read(state* st)
     data.imuData.acceleration_x = ax;
     data.imuData.acceleration_y = ay;
     data.imuData.acceleration_z = az;
-
-    return data;
+    */
 }
 
 void IMU::poll(state* st)
@@ -97,7 +96,7 @@ void IMU::poll(state* st)
 
     //last_data = data;
 
-    return read(data);
+    read(st);
 }
 
 void IMU::enable()

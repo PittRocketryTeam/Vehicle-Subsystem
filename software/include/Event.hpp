@@ -16,6 +16,6 @@ public:
 
 private:
     event_t m_cur;
-}
+};
 
 #endif /* EVENT_HPP */
