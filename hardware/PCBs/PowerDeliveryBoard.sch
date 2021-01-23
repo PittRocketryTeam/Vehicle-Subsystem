@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -7326,7 +7326,7 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <schematic_group name="5VREGULATOR"/>
 <schematic_group name="3.3VREGULATOR"/>
 <schematic_group name="THERMISTOR"/>
-<schematic_group name="CONNECTOR"/>
+<schematic_group name="SAMTEC_CONNECTOR"/>
 </groups>
 <parts>
 <part name="X_3" library="ngspice-simulation" library_urn="urn:adsk.eagle:library:527439" deviceset="GND" device=""/>
@@ -7336,7 +7336,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="C7" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1"/>
 <part name="C8" library="capacitor-wima" library_urn="urn:adsk.eagle:library:116" deviceset="C" device="2,5-3" package3d_urn="urn:adsk.eagle:package:5436/1"/>
 <part name="X_5" library="ngspice-simulation" library_urn="urn:adsk.eagle:library:527439" deviceset="GND" device=""/>
-<part name="P+9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device="" value="MCU"/>
 <part name="R2" library="varistor" library_urn="urn:adsk.eagle:library:410" deviceset="THERMISTOR" device="-5" package3d_urn="urn:adsk.eagle:package:30591/1"/>
 <part name="IC1" library="linear" library_urn="urn:adsk.eagle:library:262" deviceset="78*" device="T" package3d_urn="urn:adsk.eagle:package:16414/1" technology="12"/>
 <part name="IC2" library="linear" library_urn="urn:adsk.eagle:library:262" deviceset="78*" device="T" package3d_urn="urn:adsk.eagle:package:16414/1" technology="12"/>
@@ -7345,10 +7344,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <part name="P+12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device="" value="5V"/>
 <part name="P+13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device="" value="3.3V"/>
 <part name="X_6" library="ngspice-simulation" library_urn="urn:adsk.eagle:library:527439" deviceset="GND" device=""/>
-<part name="P+14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device="" value="TX/RX"/>
-<part name="P+15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device="" value="CS"/>
-<part name="P+16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device="" value="TX/RX"/>
-<part name="P+17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="VCC" device="" value="SPI"/>
 <part name="U1" library="SparkFun-Retired" deviceset="GENERIC-SOIC8" device="MSGEQ7N-FILTER"/>
 <part name="J1" library="XT60-M" library_urn="urn:adsk.eagle:library:23078652" deviceset="XT60-M" device="" package3d_urn="urn:adsk.eagle:package:23078655/1"/>
 <part name="U$1" library="microbuilder" deviceset="GND" device=""/>
@@ -7366,6 +7361,16 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <sheets>
 <sheet>
 <plain>
+<wire x1="53.34" y1="33.02" x2="-17.78" y2="33.02" width="0.1524" layer="95" style="shortdash"/>
+<wire x1="-17.78" y1="33.02" x2="-17.78" y2="-12.7" width="0.1524" layer="95" style="shortdash"/>
+<wire x1="-17.78" y1="-12.7" x2="53.34" y2="-12.7" width="0.1524" layer="95" style="shortdash"/>
+<wire x1="53.34" y1="-12.7" x2="53.34" y2="33.02" width="0.1524" layer="95" style="shortdash"/>
+<wire x1="-22.86" y1="22.86" x2="-22.86" y2="-5.08" width="0.1524" layer="95" style="shortdash"/>
+<wire x1="-22.86" y1="-5.08" x2="-60.96" y2="-5.08" width="0.1524" layer="95" style="shortdash"/>
+<wire x1="-60.96" y1="-5.08" x2="-60.96" y2="22.86" width="0.1524" layer="95" style="shortdash"/>
+<wire x1="-60.96" y1="22.86" x2="-22.86" y2="22.86" width="0.1524" layer="95" style="shortdash"/>
+<text x="-60.96" y="22.86" size="2.286" layer="95">Battery Connector</text>
+<text x="-17.78" y="33.02" size="2.286" layer="95">Hall Effect Sensor</text>
 </plain>
 <instances>
 <instance part="X_3" gate="G$1" x="78.74" y="5.08" smashed="yes" grouprefs="5VREGULATOR"/>
@@ -7387,9 +7392,6 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="VALUE" x="143.764" y="13.081" size="1.778" layer="96"/>
 </instance>
 <instance part="X_5" gate="G$1" x="213.36" y="5.08" smashed="yes" grouprefs="THERMISTOR"/>
-<instance part="P+9" gate="VCC" x="193.04" y="15.24" smashed="yes" grouprefs="THERMISTOR">
-<attribute name="VALUE" x="190.5" y="12.7" size="1.778" layer="96" rot="R90"/>
-</instance>
 <instance part="R2" gate="G$1" x="177.8" y="7.62" smashed="yes" rot="R180" grouprefs="THERMISTOR">
 <attribute name="NAME" x="180.34" y="3.81" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="182.88" y="13.97" size="1.778" layer="96" rot="R180"/>
@@ -7404,29 +7406,17 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <attribute name="NAME" x="196.85" y="9.1186" size="1.778" layer="95"/>
 <attribute name="VALUE" x="196.85" y="4.318" size="1.778" layer="96"/>
 </instance>
-<instance part="J3" gate="G$1" x="91.44" y="-25.4" smashed="yes" grouprefs="CONNECTOR">
+<instance part="J3" gate="G$1" x="91.44" y="-25.4" smashed="yes" grouprefs="SAMTEC_CONNECTOR">
 <attribute name="NAME" x="83.82" y="-16.51" size="1.778" layer="95"/>
 <attribute name="VALUE" x="83.82" y="-34.29" size="1.778" layer="96" align="top-left"/>
 </instance>
-<instance part="P+12" gate="VCC" x="111.76" y="-20.32" smashed="yes" rot="R270" grouprefs="CONNECTOR">
+<instance part="P+12" gate="VCC" x="111.76" y="-20.32" smashed="yes" rot="R270" grouprefs="SAMTEC_CONNECTOR">
 <attribute name="VALUE" x="114.3" y="-20.32" size="1.778" layer="96"/>
 </instance>
-<instance part="P+13" gate="VCC" x="71.12" y="-22.86" smashed="yes" rot="R90" grouprefs="CONNECTOR">
+<instance part="P+13" gate="VCC" x="71.12" y="-22.86" smashed="yes" rot="R90" grouprefs="SAMTEC_CONNECTOR">
 <attribute name="VALUE" x="68.58" y="-22.86" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="X_6" gate="G$1" x="124.46" y="-25.4" smashed="yes" grouprefs="CONNECTOR"/>
-<instance part="P+14" gate="VCC" x="111.76" y="-25.4" smashed="yes" rot="R270" grouprefs="CONNECTOR">
-<attribute name="VALUE" x="114.3" y="-25.4" size="1.778" layer="96"/>
-</instance>
-<instance part="P+15" gate="VCC" x="111.76" y="-27.94" smashed="yes" rot="R270" grouprefs="CONNECTOR">
-<attribute name="VALUE" x="114.3" y="-27.94" size="1.778" layer="96"/>
-</instance>
-<instance part="P+16" gate="VCC" x="71.12" y="-25.4" smashed="yes" rot="R90" grouprefs="CONNECTOR">
-<attribute name="VALUE" x="68.58" y="-25.4" size="1.778" layer="96" rot="R180"/>
-</instance>
-<instance part="P+17" gate="VCC" x="71.12" y="-27.94" smashed="yes" rot="R90" grouprefs="CONNECTOR">
-<attribute name="VALUE" x="68.58" y="-27.94" size="1.778" layer="96" rot="R180"/>
-</instance>
+<instance part="X_6" gate="G$1" x="129.54" y="-25.4" smashed="yes" grouprefs="SAMTEC_CONNECTOR"/>
 <instance part="U1" gate="G$1" x="2.54" y="12.7" smashed="yes">
 <attribute name="NAME" x="2.54" y="15.748" size="1.778" layer="95"/>
 </instance>
@@ -7502,50 +7492,21 @@ You are welcome to use this library for commercial purposes. For attribution, we
 </segment>
 <segment>
 <pinref part="J3" gate="G$1" pin="04"/>
-<wire x1="104.14" y1="-22.86" x2="124.46" y2="-22.86" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
-<wire x1="124.46" y1="-22.86" x2="124.46" y2="-25.4" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
+<wire x1="104.14" y1="-22.86" x2="129.54" y2="-22.86" width="0.1524" layer="91" grouprefs="SAMTEC_CONNECTOR"/>
+<wire x1="129.54" y1="-22.86" x2="129.54" y2="-25.4" width="0.1524" layer="91" grouprefs="SAMTEC_CONNECTOR"/>
 <pinref part="X_6" gate="G$1" pin="0"/>
 </segment>
 </net>
 <net name="VCC" class="0">
 <segment>
-<wire x1="193.04" y1="7.62" x2="195.58" y2="7.62" width="0.1524" layer="91" grouprefs="THERMISTOR"/>
-<pinref part="P+9" gate="VCC" pin="VCC"/>
-<wire x1="193.04" y1="12.7" x2="193.04" y2="7.62" width="0.1524" layer="91" grouprefs="THERMISTOR"/>
-<pinref part="R2" gate="G$1" pin="2"/>
-<wire x1="182.88" y1="7.62" x2="193.04" y2="7.62" width="0.1524" layer="91" grouprefs="THERMISTOR"/>
-<junction x="193.04" y="7.62" grouprefs="THERMISTOR"/>
-<pinref part="R1" gate="G$1" pin="1"/>
-</segment>
-<segment>
 <pinref part="J3" gate="G$1" pin="02"/>
-<wire x1="104.14" y1="-20.32" x2="109.22" y2="-20.32" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
+<wire x1="104.14" y1="-20.32" x2="109.22" y2="-20.32" width="0.1524" layer="91" grouprefs="SAMTEC_CONNECTOR"/>
 <pinref part="P+12" gate="VCC" pin="VCC"/>
 </segment>
 <segment>
 <pinref part="J3" gate="G$1" pin="03"/>
-<wire x1="78.74" y1="-22.86" x2="73.66" y2="-22.86" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
+<wire x1="78.74" y1="-22.86" x2="73.66" y2="-22.86" width="0.1524" layer="91" grouprefs="SAMTEC_CONNECTOR"/>
 <pinref part="P+13" gate="VCC" pin="VCC"/>
-</segment>
-<segment>
-<pinref part="J3" gate="G$1" pin="06"/>
-<wire x1="104.14" y1="-25.4" x2="109.22" y2="-25.4" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
-<pinref part="P+14" gate="VCC" pin="VCC"/>
-</segment>
-<segment>
-<pinref part="J3" gate="G$1" pin="08"/>
-<wire x1="104.14" y1="-27.94" x2="109.22" y2="-27.94" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
-<pinref part="P+15" gate="VCC" pin="VCC"/>
-</segment>
-<segment>
-<pinref part="P+16" gate="VCC" pin="VCC"/>
-<pinref part="J3" gate="G$1" pin="05"/>
-<wire x1="73.66" y1="-25.4" x2="78.74" y2="-25.4" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
-</segment>
-<segment>
-<pinref part="J3" gate="G$1" pin="07"/>
-<pinref part="P+17" gate="VCC" pin="VCC"/>
-<wire x1="78.74" y1="-27.94" x2="73.66" y2="-27.94" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
 </segment>
 </net>
 <net name="1" class="0">
@@ -7686,6 +7647,11 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <wire x1="-39.37" y1="7.62" x2="-39.37" y2="20.32" width="0.1524" layer="91"/>
 <label x="-38.1" y="17.78" size="1.778" layer="95"/>
 </segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="10"/>
+<wire x1="104.14" y1="-30.48" x2="109.22" y2="-30.48" width="0.1524" layer="91"/>
+<label x="109.22" y="-30.48" size="1.778" layer="95"/>
+</segment>
 </net>
 <net name="VI_OUT" class="0">
 <segment>
@@ -7698,9 +7664,25 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <label x="43.18" y="10.16" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="J3" gate="G$1" pin="01"/>
-<wire x1="78.74" y1="-20.32" x2="73.66" y2="-20.32" width="0.1524" layer="91" grouprefs="CONNECTOR"/>
-<label x="66.04" y="-20.32" size="1.778" layer="95"/>
+<pinref part="J3" gate="G$1" pin="08"/>
+<wire x1="104.14" y1="-27.94" x2="109.22" y2="-27.94" width="0.1524" layer="91"/>
+<label x="109.22" y="-27.94" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="BATT_TEMP" class="0">
+<segment>
+<wire x1="193.04" y1="7.62" x2="195.58" y2="7.62" width="0.1524" layer="91" grouprefs="THERMISTOR"/>
+<wire x1="193.04" y1="12.7" x2="193.04" y2="7.62" width="0.1524" layer="91" grouprefs="THERMISTOR"/>
+<pinref part="R2" gate="G$1" pin="2"/>
+<wire x1="182.88" y1="7.62" x2="193.04" y2="7.62" width="0.1524" layer="91" grouprefs="THERMISTOR"/>
+<junction x="193.04" y="7.62" grouprefs="THERMISTOR"/>
+<pinref part="R1" gate="G$1" pin="1"/>
+<label x="193.04" y="12.7" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="06"/>
+<wire x1="104.14" y1="-25.4" x2="109.22" y2="-25.4" width="0.1524" layer="91"/>
+<label x="109.22" y="-25.4" size="1.778" layer="95"/>
 </segment>
 </net>
 </nets>
