@@ -1,12 +1,11 @@
 #ifndef __LOGGER_HPP__
 #define __LOGGER_HPP__
 
-#include "assert.h"
+#include <assert.h>
 #include "Sensor.hpp"
 #include <SPI.h>
-//#include "SdFat.h"
 #include <SD.h>
-#include "TimeLib.h"
+#include <TimeLib.h>
 #include "protocol.hpp"
 
 //#define BUILTIN_SDCARD 254
@@ -22,7 +21,7 @@ class Logger
          * Initialize the logger. Returns false if the initialization fails for 
          * any reason.
         */
-        virtual bool init();
+        bool init();
 
         /**
          * Reads from each sensor and writes the timestamped data to the disk. 
@@ -36,6 +35,7 @@ class Logger
         void flush();
 
         //virtual bool writeToMemory(Data);
+        void write(state*);
 
     private:
 

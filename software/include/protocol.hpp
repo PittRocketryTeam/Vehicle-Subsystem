@@ -5,12 +5,27 @@
 
 typedef struct _state
 {
+    unsigned long ts;
+    int fcmode;
+    
     float temp;
     float vbat;
     float pressure;
     float altitude;
     float lat;
     float lon;
+
+    float ax;
+    float ay;
+    float az;
+    float wx;
+    float wy;
+    float wz;
+    float qx;
+    float qy;
+    float qz;
+    float qw;
+
     int main_deploy;
     int drogue_deploy;
     int launch_detect;

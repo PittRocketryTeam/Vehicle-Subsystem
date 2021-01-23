@@ -51,11 +51,11 @@ void Altimeter::poll(state* st)
         Serial.println("Failed to perform reading :(");
     }
 
-    /*
-    data.altimeterData.temperature = bmp.readTemperature();
-    data.altimeterData.pressure = bmp.readPressure();
-    data.altimeterData.altitude = bmp.readAltitude(baselinePressure);
-    
+    st->altitude = bmp.readAltitude(SEALEVELPRESSURE_HPA);
+    st->pressure = bmp.readPressure();
+    st->temp = bmp.readTemperature();
+
+    /*    
     // Serial.printf("temp: %f\npressure: %f\nalt: %f\n", data.altimeterData.temperature, data.altimeterData.pressure, data.altimeterData.altitude);
     */
 }

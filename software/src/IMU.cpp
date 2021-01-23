@@ -7,12 +7,6 @@ IMU::IMU()
 {
     sensor = Adafruit_BNO055(55, IMU_ADDR, &Wire1);
     verbose = false;
-    ax = 0.0f;
-    ay = 0.0f;
-    az = 0.0f;
-    ox = 0.0f;
-    oy = 0.0f;
-    oz = 0.0f;
     //last_data = new Data;
 }
 
@@ -54,15 +48,18 @@ void IMU::init()
 
 void IMU::read(state* st)
 {
-    /*
-    data.imuData.euler_abs_orientation_x = ox;
-    data.imuData.euler_abs_orientation_y = oy;
-    data.imuData.euler_abs_orientation_z = oz;
+    st->ax = a.x();
+    st->ay = a.y();
+    st->az = a.z();
 
-    data.imuData.acceleration_x = ax;
-    data.imuData.acceleration_y = ay;
-    data.imuData.acceleration_z = az;
-    */
+    st->wx = w.x();
+    st->wy = w.y();
+    st->wz = w.z();    
+
+    st->qx = q.x();
+    st->qy = q.y();
+    st->qz = q.z();
+    st->qw = q.w();
 }
 
 void IMU::poll(state* st)
@@ -73,15 +70,14 @@ void IMU::poll(state* st)
     //oy = event.orientation.y;
     //oz = event.orientation.z;
     //ox = oy = oz = 69.0f;
-    o = sensor.getVector(Adafruit_BNO055::VECTOR_EULER);
+    /*o = sensor.getVector(Adafruit_BNO055::VECTOR_EULER);
     ox = (float)o.x();
     oy = (float)o.y();
-    oz = (float)o.z();
+    oz = (float)o.z();*/
 
     a = sensor.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
-    ax = (float)a.x();
-    ay = (float)a.y();
-    az = (float)a.z();
+    w = sensor.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+    q = sensor.getQuat();
 
     // Serial.print(ox);
     // Serial.print(", ");

@@ -1,7 +1,9 @@
+PIO = /home/patrick/.platformio/penv/bin/pio
+
 build:
-	pio run -t upload -j4 --upload-port=$(PORT)
+	$(PIO) run -t upload -j4
 
 monitor:
-	pio device monitor --port=$(PORT)
+	$(PIO) run -t monitor
 
 all: build

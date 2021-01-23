@@ -34,6 +34,8 @@ void Health::read(state* st)
         return;
     }
 
+    st->vbat = battery_voltage;
+
     /*data.healthData.main_battery_temperature = battery_temperature;
     data.healthData.main_battery_voltage = battery_voltage;
     data.healthData.reg_5V_battery_voltage = reg5_voltage;

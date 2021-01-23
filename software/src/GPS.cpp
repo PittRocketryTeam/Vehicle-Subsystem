@@ -104,6 +104,9 @@ void GPS::poll(state* st)
         gps.parse(gps.lastNMEA());
     }
 
+    st->lon = gps.longitude;
+    st->lat = gps.latitude;
+
     /*my_fix_quality = gps.fixquality;
     my_time = gps.seconds;
     my_number_of_satellites = gps.satellites;

@@ -18,10 +18,10 @@ class IMU : public Sensor
         //Data *last_data;
         //Data last_data;
 
-        float ax, ay, az;
-        float ox, oy, oz;
         imu::Vector<3> o;
+        imu::Vector<3> w;
         imu::Vector<3> a;
+        imu::Quaternion q;
 
     public:
 

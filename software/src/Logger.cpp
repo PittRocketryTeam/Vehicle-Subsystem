@@ -51,7 +51,7 @@ bool Logger::init()
         Serial.println("fail");
         Error::display(LOG_INIT, FATAL);
         Error::display(WERE_SCREWED, FATAL);
-        return;
+        return false;
     }
     
     genUniqueFn();
@@ -60,36 +60,13 @@ bool Logger::init()
     return true;
 }
 
-/*void Logger::generateFilename()
-{
-    memset(filename, 0, sizeof(filename));
-
-    /*current_time = now();
-    if (RTC_set_successfully)
-    {
-        sprintf(filename, "%d-%d-%d_%d-%d-%d.csv", 
-                month(current_time),
-                day(current_time),
-                year(current_time),
-                hour(current_time),
-                minute(current_time),
-                second(current_time)
-               );        
-    }
-    else
-    {
-        sprintf(filename, "loggylog.csv");
-    }
-    sprintf(filename, "loggylog.csv");
-}*/
-
 void Logger::genUniqueFn()
 {
     int log_num = 1;
 
-    if (SD.exists("jrnl"))
+    if (SD.exists("JRNL"))
     {
-        handle = SD.open("jrnl", FILE_READ);
+        handle = SD.open("JRNL", FILE_READ);
         delay(100);
         char bf[100];
         size_t r = handle.readBytes(bf, 100);
@@ -102,7 +79,7 @@ void Logger::genUniqueFn()
         delay(100);
     }
 
-    handle = SD.open("jrnl", FILE_WRITE);
+    handle = SD.open("JRNL", FILE_WRITE);
     if (handle)
     {
         handle.seek(0);
@@ -115,7 +92,7 @@ void Logger::genUniqueFn()
     }
     
     memset(filename, 0, sizeof(filename));
-    sprintf(filename, "lg%d", log_num);
+    sprintf(filename, "LG%d.csv", log_num);
 
     delay(100);
 }
@@ -167,6 +144,15 @@ void Logger::genUniqueFn()
 
     return true; 
 }*/
+
+void Logger::write(state* st)
+{
+    if (handle)
+    {
+        handle.printf("%ld,\n",
+            st->ts);
+    }
+}
 
 void Logger::flush()
 {
