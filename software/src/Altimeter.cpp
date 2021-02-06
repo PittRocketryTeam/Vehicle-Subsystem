@@ -18,7 +18,8 @@ void Altimeter::init()
     for (i=0; i < CONN_ATTEMPTS; i++)
     {
         Error::on(ALT_INIT);
-        if (bmp.begin())
+        Serial.println("try");
+        if (bmp.begin(0x77, &Wire1))
         {
             break;
         }
@@ -28,6 +29,7 @@ void Altimeter::init()
     Error::off();
     if (i > CONN_ATTEMPTS)
     {
+        Serial.println("alt bad");
         Error::display(ALT_INIT, FATAL);
     }
 }

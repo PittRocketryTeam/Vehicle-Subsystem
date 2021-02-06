@@ -12,7 +12,7 @@
 #define DEBUG_LED_3 13
 
 #define GPS_ENABLE -1
-#define GPS_SERIAL Serial2
+#define GPS_SERIAL Serial1
 
 #define IMU_ADDR 0x00 // TODO
 

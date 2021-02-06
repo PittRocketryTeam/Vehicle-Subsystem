@@ -7,7 +7,7 @@
 #include "Health.hpp"
 #include "Altimeter.hpp"
 
-#define GPS_PR_SLOW 4'000'000
+#define GPS_PR_SLOW 1'000'000
 #define GPS_PR_FAST 1'000'000
 #define TRX_PR_SLOW 2'000'000
 #define TRX_PR_FAST 250'000
@@ -25,14 +25,14 @@ static GPS gps;
 static IMU ag;
 static Altimeter alt;
 static Health hlt;
-static fcmode_t mode;
+static fcmode_t mode = IDLE;
 
 static IntervalTimer gps_int;
 static IntervalTimer lgr_int;
 static IntervalTimer trx_int;
 static IntervalTimer snr_int;
 
-static bool transition;
+static bool transition = false;
 
 void serial_init()
 {
@@ -60,36 +60,37 @@ void serial_init()
 
 void gps_read_callback()
 {
-    cli();
+    noInterrupts();
     gps.internal_read();
-    sei();
+    interrupts();
 }
 
 void lgr_flush_callback()
 {
-    cli();
+    noInterrupts();
     lgr.flush();
-    sei();
+    interrupts();
 }
 
 void trx_send_callback()
 {
-    cli();
+    noInterrupts();
     //todo
-    sei();
+    interrupts();
 }
 
 void snr_poll_callback()
 {
-    cli();
-    ag.poll(&st);
+    noInterrupts();
+    //ag.poll(&st);
     alt.poll(&st);
-    hlt.poll(&st);
-    sei();
+    //hlt.poll(&st);
+    //gps.poll(&st);
+    interrupts();
 }
 
 void setup()
-{
+{    
     pinMode(13, OUTPUT);
     digitalWrite(13, HIGH);
     delay(1000);
@@ -102,12 +103,15 @@ void setup()
 
     Error::init();
     serial_init();
+    Serial.println("hello world");
 
     lgr.init();
-    ag.init();
+    //ag.init();
     alt.init();
+    Serial.println("here");
     gps.init();
     hlt.init();
+    Serial.println("ALL SENSORS READY");
 
     Error::summary();
 
@@ -119,29 +123,38 @@ void setup()
 
     gps_int.begin(gps_read_callback, GPS_PR_SLOW);
     lgr_int.begin(lgr_flush_callback, LOG_PR_SLOW);
-    trx_int.begin(trx_send_callback, TRX_PR_SLOW);
+    //trx_int.begin(trx_send_callback, TRX_PR_SLOW);
     snr_int.begin(snr_poll_callback, SNR_PR_SLOW);
+
+    printf("init done");
 }
 
 void idle_transition()
 {
-    gps_int.begin(gps_read_callback, GPS_PR_SLOW);
-    lgr_int.begin(lgr_flush_callback, LOG_PR_SLOW);
-    trx_int.begin(trx_send_callback, TRX_PR_SLOW);
-    snr_int.begin(snr_poll_callback, SNR_PR_SLOW);
+    gps_int.update(GPS_PR_SLOW);
+    //lgr_int.begin(lgr_flush_callback, LOG_PR_SLOW);
+    //trx_int.begin(trx_send_callback, TRX_PR_SLOW);
+    //snr_int.begin(snr_poll_callback, SNR_PR_SLOW);
 }
 
 void idle()
 {
-
+    delay(100);
+    Serial.println(st.altitude);
+    pinMode(13, OUTPUT);
+    digitalWrite(13, HIGH);
+    delay(100);
+    digitalWrite(13, LOW);
+    delay(100);
+    lgr.write(&st);
 }
 
 void startup_transition()
 {
-    gps_int.begin(gps_read_callback, GPS_PR_FAST);
-    lgr_int.begin(lgr_flush_callback, LOG_PR_FAST);
-    trx_int.begin(trx_send_callback, TRX_PR_FAST);
-    snr_int.begin(snr_poll_callback, SNR_PR_FAST);
+    gps_int.update(GPS_PR_FAST);
+    //lgr_int.begin(lgr_flush_callback, LOG_PR_FAST);
+    //trx_int.begin(trx_send_callback, TRX_PR_FAST);
+    //snr_int.begin(snr_poll_callback, SNR_PR_FAST);
 }
 
 void startup()

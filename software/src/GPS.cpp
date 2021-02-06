@@ -59,6 +59,7 @@ void GPS::init()
 
         if (err > 10)
         {
+            Serial.println("GPS INIT ERR");
             Error::display(GPS_INIT, FATAL);
             break;
         }
@@ -106,6 +107,7 @@ void GPS::poll(state* st)
 
     st->lon = gps.longitude;
     st->lat = gps.latitude;
+    st->nsats = gps.satellites;
 
     /*my_fix_quality = gps.fixquality;
     my_time = gps.seconds;

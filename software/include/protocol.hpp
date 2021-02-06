@@ -12,6 +12,7 @@ typedef struct _state
     float vbat;
     float pressure;
     float altitude;
+    int nsats;
     float lat;
     float lon;
 
