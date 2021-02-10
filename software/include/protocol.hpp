@@ -10,6 +10,7 @@ typedef struct _state
     
     float temp;
     float vbat;
+    float ibat;
     float pressure;
     float altitude;
     int nsats;
@@ -32,6 +33,16 @@ typedef struct _state
     int launch_detect;
     int payload_pre;
     int payload_dep;
+    int burnout;
+    int apogee;
+
+    float alt_buf[5];
+    int alt_buf_pos;
+    float vy;
+
+    float anet_buf[5];
+    int anet_buf_pos;
+    float anet;
 } state;
 
 typedef struct _HEALTH_PKT // voltages, current draw
@@ -73,7 +84,8 @@ typedef struct _EVENT_PKT
 typedef struct _CMD_PKT
 {
     int command_type;
-
 } CMD_PKT;
+
+#include "protocol.inl"
 
 #endif /* PROTOCOL_HPP */

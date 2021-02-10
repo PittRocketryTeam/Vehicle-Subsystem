@@ -6,6 +6,7 @@
 #include "Logger.hpp"
 #include "Health.hpp"
 #include "Altimeter.hpp"
+#include "Event.hpp"
 
 #define GPS_PR_SLOW 1'000'000
 #define GPS_PR_FAST 1'000'000
@@ -16,7 +17,7 @@
 #define LOG_PR_SLOW 4'000'000
 #define LOG_PR_FAST 1'000'000
 
-enum fcmode_t {IDLE = 0, STARTUP = 1, FAIL = 2};
+enum fcmode_t {FCIDLE = 0, FCSTARTUP = 1, FCFAIL = 2};
 
 static Logger lgr;
 static state st;
@@ -25,7 +26,8 @@ static GPS gps;
 static IMU ag;
 static Altimeter alt;
 static Health hlt;
-static fcmode_t mode = IDLE;
+static fcmode_t mode = FCIDLE;
+static Event evt;
 
 static IntervalTimer gps_int;
 static IntervalTimer lgr_int;
@@ -75,13 +77,20 @@ void lgr_flush_callback()
 void trx_send_callback()
 {
     noInterrupts();
-    //todo
+    
     interrupts();
 }
 
 void snr_poll_callback()
 {
     noInterrupts();
+
+    // rolling averages
+    st.alt_buf[st.alt_buf_pos++ % 5] = st.altitude;
+
+    st.anet_buf[st.anet_buf_pos++ % 5] = anet(&st);
+
+    // get new data
     st.ts = millis();
     //ag.poll(&st);
     alt.poll(&st);
@@ -99,15 +108,15 @@ void setup()
     delay(1000);
 
     memset(&st, 0, sizeof(state));      // zero system state
-    mode = IDLE;
+    mode = FCIDLE;
     transition = false;
 
     Error::init();
     serial_init();
     Serial.println("hello world");
 
-    //lgr.init();
-    //ag.init();
+    lgr.init();
+    ag.init();
     alt.init();
     Serial.println("here");
     gps.init();
@@ -119,7 +128,7 @@ void setup()
     // set timers
     gps_int.priority(0);
     trx_int.priority(1);
-    //lgr_int.priority(2);
+    lgr_int.priority(2);
     snr_int.priority(3);
 
     gps_int.begin(gps_read_callback, GPS_PR_SLOW);
@@ -133,9 +142,9 @@ void setup()
 void idle_transition()
 {
     gps_int.update(GPS_PR_SLOW);
-    //lgr_int.begin(lgr_flush_callback, LOG_PR_SLOW);
-    //trx_int.begin(trx_send_callback, TRX_PR_SLOW);
-    //snr_int.begin(snr_poll_callback, SNR_PR_SLOW);
+    //lgr_int.update(LOG_PR_SLOW);
+    //trx_int.update(TRX_PR_SLOW);
+    //snr_int.update(SNR_PR_SLOW);
 }
 
 void idle()
@@ -148,14 +157,18 @@ void idle()
 void startup_transition()
 {
     gps_int.update(GPS_PR_FAST);
-    //lgr_int.begin(lgr_flush_callback, LOG_PR_FAST);
-    //trx_int.begin(trx_send_callback, TRX_PR_FAST);
-    //snr_int.begin(snr_poll_callback, SNR_PR_FAST);
+    //lgr_int.update(LOG_PR_FAST);
+    //trx_int.update(TRX_PR_FAST);
+    //snr_int.update(SNR_PR_FAST);
 }
 
 void startup()
 {
-    
+    noInterrupts();
+    lgr.write(&st);
+    interrupts();
+
+    evt.infer(&st);
 }
 
 void loop()
@@ -165,15 +178,15 @@ void loop()
         transition = false;
         switch (mode)
         {
-            case IDLE:
+            case FCIDLE:
             idle_transition();
             break;
 
-            case STARTUP:
+            case FCSTARTUP:
             startup_transition();
             break;
 
-            case FAIL:
+            case FCFAIL:
             break;
         }
         return;
@@ -185,11 +198,11 @@ void loop()
         idle();
         break;
 
-        case STARTUP:
+        case FCSTARTUP:
         startup();
         break;
 
-        case FAIL:
+        case FCFAIL:
         break;
     }
 }

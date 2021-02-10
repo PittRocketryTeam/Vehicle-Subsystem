@@ -3,9 +3,10 @@
 #include <cstring>
 
 XBee::XBee() :
-    mode(-1)
+    mode(-1),
+    cycle(0)
 {
-
+    memset(buffer, 0, 100);
     Serial4.begin(9600); //Serial4 is used for the PCB
     int i;
     for (i = 0; i < CONN_ATTEMPTS; i++)
@@ -26,10 +27,37 @@ XBee::XBee() :
 
 XBee::~XBee() {}
 
-void XBee::transmit()
+void XBee::transmit(state* st)
 {
-    Serial4.println(formattedData);
-    //Serial4.flush();
+    int id;
+    int len;
+    // send periodic data
+    if (cycle % 10 == 0) // send health data
+    {
+
+    }
+    else if ((cycle + 1) % 10 == 0) // send flight evets
+    {
+
+    }
+    else // send orientation packet
+    {
+        len = 14 * sizeof(float);
+
+        *(int*)(buffer) = len;
+        *(int*)(buffer + 4) = id;
+        get_orientation(st, scratch);
+        memcpy(buffer + 8, scratch, 12 * sizeof(float));
+    }
+
+    // reset cycle counter
+    ++cycle;
+    if (cycle == 10)
+    {
+        cycle = 0;
+    }
+
+    Serial4.write(buffer, len + 4);
 }
 
 /*void XBee::setCachedData(Data newData)

@@ -3,7 +3,7 @@
 
 #include "protocol.hpp"
 
-typedef enum {LAUNCH = 0, BURNOUT = 1, DROUGE = 2, MAIN = 3, PREDEP = 4, DEPLOY = 5, TOUCHDOWN = 6} event_t;
+typedef enum {IDLE = 0, LAUNCH = 1, BURNOUT = 2, APOGEE = 3, DROGUE = 4, MAIN = 5, PREDEP = 6, DEPLOY = 7, TOUCHDOWN = 10} event_t;
 
 class Event
 {

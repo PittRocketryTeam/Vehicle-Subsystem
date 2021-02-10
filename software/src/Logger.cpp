@@ -156,7 +156,7 @@ void Logger::write(state* st)
 
             st->altitude,
             st->pressure,
-            st->temp
+            st->temp,
             
             st->ax,
             st->ay,
