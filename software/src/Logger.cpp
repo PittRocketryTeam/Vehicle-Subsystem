@@ -149,8 +149,25 @@ void Logger::write(state* st)
 {
     if (handle)
     {
-        handle.printf("%ld,\n",
-            st->ts);
+        handle.printf(
+            "%ld,%d,,%f,%f,%f,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
+            st->ts,
+            st->fcmode,
+
+            st->altitude,
+            st->pressure,
+            st->temp
+            
+            st->ax,
+            st->ay,
+            st->az,
+            st->wx,
+            st->wy,
+            st->wz,
+            st->qx,
+            st->qy,
+            st->qz,
+            st->qw);
     }
 }
 

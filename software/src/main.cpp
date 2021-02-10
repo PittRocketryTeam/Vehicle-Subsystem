@@ -82,10 +82,11 @@ void trx_send_callback()
 void snr_poll_callback()
 {
     noInterrupts();
+    st.ts = millis();
     //ag.poll(&st);
     alt.poll(&st);
     //hlt.poll(&st);
-    //gps.poll(&st);
+    gps.poll(&st);
     interrupts();
 }
 
@@ -105,7 +106,7 @@ void setup()
     serial_init();
     Serial.println("hello world");
 
-    lgr.init();
+    //lgr.init();
     //ag.init();
     alt.init();
     Serial.println("here");
@@ -118,7 +119,7 @@ void setup()
     // set timers
     gps_int.priority(0);
     trx_int.priority(1);
-    lgr_int.priority(2);
+    //lgr_int.priority(2);
     snr_int.priority(3);
 
     gps_int.begin(gps_read_callback, GPS_PR_SLOW);
@@ -139,14 +140,9 @@ void idle_transition()
 
 void idle()
 {
-    delay(100);
-    Serial.println(st.altitude);
-    pinMode(13, OUTPUT);
-    digitalWrite(13, HIGH);
-    delay(100);
-    digitalWrite(13, LOW);
-    delay(100);
+    noInterrupts();
     lgr.write(&st);
+    interrupts();
 }
 
 void startup_transition()
