@@ -1,15 +1,17 @@
 #ifndef PINS_HPP
 #define PINS_HPP
 
+#include <Arduino.h>
+
 // Options
 #define DEBUG 1
 #define VERBOSE 0
 
 // Pin mapping
 
-#define DEBUG_LED_1 13
-#define DEBUG_LED_2 13
-#define DEBUG_LED_3 13
+#define DEBUG_LED_1 41
+#define DEBUG_LED_2 40
+#define DEBUG_LED_3 39
 
 #define GPS_ENABLE -1
 #define GPS_SERIAL Serial1

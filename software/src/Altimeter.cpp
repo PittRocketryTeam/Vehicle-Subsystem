@@ -19,7 +19,7 @@ void Altimeter::init()
     {
         Error::on(ALT_INIT);
         Serial.println("try");
-        if (bmp.begin(0x77, &Wire1))
+        if (bmp.begin(0x77, &Wire2))
         {
             break;
         }
@@ -50,7 +50,7 @@ void Altimeter::poll(state* st)
 {
     if(!bmp.performReading()) //assigns values to pressure and temperature
     {
-        Serial.println("Failed to perform reading :(");
+        //Serial.println("Failed to perform reading :(");
     }
 
     st->altitude = bmp.readAltitude(SEALEVELPRESSURE_HPA);
