@@ -12,7 +12,7 @@
 #define GPS_PR_FAST 1'000'000
 #define TRX_PR_SLOW 2'000'000
 #define TRX_PR_FAST 250'000
-#define SNR_PR_SLOW 250'000
+#define SNR_PR_SLOW 1'000'000
 #define SNR_PR_FAST 1'000
 #define LOG_PR_SLOW 4'000'000
 #define LOG_PR_FAST 1'000'000
@@ -108,8 +108,8 @@ void setup()
     Serial.println("hello world");
 
     lgr.init();
-    //ag.init();
-    //alt.init();
+    ag.init();
+    alt.init();
     gps.init();
     hlt.init();
     trx.init();
@@ -132,9 +132,9 @@ void setup()
 void idle_transition()
 {
     gps_int.update(GPS_PR_SLOW);
-    //lgr_int.update(LOG_PR_SLOW);
-    //trx_int.update(TRX_PR_SLOW);
-    //snr_int.update(SNR_PR_SLOW);
+    lgr_int.update(LOG_PR_SLOW);
+    trx_int.update(TRX_PR_SLOW);
+    snr_int.update(SNR_PR_SLOW);
 }
 
 void idle()
@@ -147,9 +147,9 @@ void idle()
 void startup_transition()
 {
     gps_int.update(GPS_PR_FAST);
-    //lgr_int.update(LOG_PR_FAST);
-    //trx_int.update(TRX_PR_FAST);
-    //snr_int.update(SNR_PR_FAST);
+    lgr_int.update(LOG_PR_FAST);
+    trx_int.update(TRX_PR_FAST);
+    snr_int.update(SNR_PR_FAST);
 }
 
 void startup()
@@ -208,8 +208,8 @@ void loop()
 
         // get new data
         st.ts = millis();
-        //ag.poll(&st);
-        //alt.poll(&st);
+        ag.poll(&st);
+        alt.poll(&st);
         hlt.poll(&st);
         gps.poll(&st);
 

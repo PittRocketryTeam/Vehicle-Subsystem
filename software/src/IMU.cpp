@@ -15,11 +15,11 @@ IMU::~IMU()
 
 void IMU::init()
 {
-    sensor = Adafruit_BNO055(55, IMU_ADDR, &Wire1);
+    sensor = Adafruit_BNO055(55, 0x28, &Wire);
     verbose = false;
 
     int i;
-    for (i = 0; i < 5; ++i)
+    for (i = 0; i < CONN_ATTEMPTS; ++i)
     {
         Error::on(IMU_INIT);
         if (sensor.begin())

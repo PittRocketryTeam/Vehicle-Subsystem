@@ -103,6 +103,7 @@ void GPS::poll(state* st)
 {
     if (gps.newNMEAreceived())
     {
+        Error::on(WERE_SCREWED);
         gps.parse(gps.lastNMEA());
     }
 

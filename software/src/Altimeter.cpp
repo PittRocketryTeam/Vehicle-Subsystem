@@ -19,7 +19,7 @@ void Altimeter::init()
     {
         Error::on(ALT_INIT);
         Serial.println("try");
-        if (bmp.begin(0x77, &Wire2))
+        if (bmp.begin(0x77, &Wire))
         {
             break;
         }
