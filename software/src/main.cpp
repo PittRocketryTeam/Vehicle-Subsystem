@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "protocol.hpp"
 #include "GPS.hpp"
-#include "XBee.h"
+#include "MyXBee.hpp"
 #include "IMU.hpp"
 #include "Logger.hpp"
 #include "Health.hpp"
@@ -21,7 +21,7 @@ enum fcmode_t {FCIDLE = 0, FCSTARTUP = 1, FCFAIL = 2};
 
 static Logger lgr;
 static state st;
-static XBee trx;
+static MyXBee trx;
 static GPS gps;
 static IMU ag;
 static Altimeter alt;
@@ -34,10 +34,16 @@ static IntervalTimer lgr_int;
 static IntervalTimer trx_int;
 static IntervalTimer snr_int;
 
+volatile bool write = false;
+volatile bool flush = false;
+volatile bool poll = false;
+volatile bool lg;
+
 static bool transition = false;
 
 void serial_init()
 {
+    Error::on(SERIAL_INIT);
     Serial.begin(9600);
     int i;
     for (i = 0; i < CONN_ATTEMPTS; ++i)
@@ -70,7 +76,7 @@ void gps_read_callback()
 void lgr_flush_callback()
 {
     noInterrupts();
-    lgr.flush();
+    flush = true;
     interrupts();
 }
 
@@ -84,43 +90,29 @@ void trx_send_callback()
 void snr_poll_callback()
 {
     noInterrupts();
-
-    // rolling averages
-    st.alt_buf[st.alt_buf_pos++ % 5] = st.altitude;
-
-    st.anet_buf[st.anet_buf_pos++ % 5] = anet(&st);
-
-    // get new data
-    st.ts = millis();
-    //ag.poll(&st);
-    alt.poll(&st);
-    //hlt.poll(&st);
-    gps.poll(&st);
+    poll = true;
     interrupts();
 }
 
 void setup()
 {    
-    pinMode(13, OUTPUT);
-    digitalWrite(13, HIGH);
-    delay(1000);
-    digitalWrite(13, LOW);
-    delay(1000);
-
     memset(&st, 0, sizeof(state));      // zero system state
     mode = FCIDLE;
     transition = false;
 
+    pinMode(13, OUTPUT);
+
     Error::init();
+
     serial_init();
     Serial.println("hello world");
 
     lgr.init();
-    ag.init();
-    alt.init();
-    Serial.println("here");
+    //ag.init();
+    //alt.init();
     gps.init();
     hlt.init();
+    trx.init();
     Serial.println("ALL SENSORS READY");
 
     Error::summary();
@@ -133,10 +125,8 @@ void setup()
 
     gps_int.begin(gps_read_callback, GPS_PR_SLOW);
     lgr_int.begin(lgr_flush_callback, LOG_PR_SLOW);
-    //trx_int.begin(trx_send_callback, TRX_PR_SLOW);
+    trx_int.begin(trx_send_callback, TRX_PR_SLOW);
     snr_int.begin(snr_poll_callback, SNR_PR_SLOW);
-
-    printf("init done");
 }
 
 void idle_transition()
@@ -150,7 +140,7 @@ void idle_transition()
 void idle()
 {
     noInterrupts();
-    lgr.write(&st);
+    //lgr.write(&st);
     interrupts();
 }
 
@@ -165,7 +155,7 @@ void startup_transition()
 void startup()
 {
     noInterrupts();
-    lgr.write(&st);
+    //lgr.write(&st);
     interrupts();
 
     evt.infer(&st);
@@ -200,9 +190,29 @@ void loop()
 
         case FCSTARTUP:
         startup();
+
         break;
 
         case FCFAIL:
         break;
+    }
+
+    //Serial.println("here");
+
+    if (poll)
+    {
+        // rolling averages
+        st.alt_buf[st.alt_buf_pos++ % 5] = st.altitude;
+
+        st.anet_buf[st.anet_buf_pos++ % 5] = anet(&st);
+
+        // get new data
+        st.ts = millis();
+        //ag.poll(&st);
+        //alt.poll(&st);
+        hlt.poll(&st);
+        gps.poll(&st);
+
+        lgr.write(&st);
     }
 }

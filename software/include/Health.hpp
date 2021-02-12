@@ -1,10 +1,6 @@
 #ifndef __HEALTH_HPP__
 #define __HEALTH_HPP__
 
-#define BATT_T A3
-#define BATT_V A1
-#define REG5_V A8
-#define REG3_V A7
 #define MOHM 1e6
 #define KOHM 1e3
 #define THERMISTOR_T0 298.15
@@ -33,6 +29,7 @@ class Health : public Sensor
 
         float battery_temperature;
         float battery_voltage;
+        float battery_current;
         float reg5_voltage;
         float reg3_voltage;
         

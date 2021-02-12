@@ -47,6 +47,7 @@ void GPS::init()
     Error::off();
     if (i == CONN_ATTEMPTS)
     {
+        Serial.println("cannot init gps");
         Error::display(GPS_INIT, FATAL);
         Error::display(WERE_SCREWED, FATAL);
     }

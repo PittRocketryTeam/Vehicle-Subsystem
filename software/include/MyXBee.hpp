@@ -1,11 +1,11 @@
-#ifndef __XBEE_HPP__
-#define __XBEE_HPP__
+#ifndef __MYXBEE_HPP__
+#define __MYXBEE_HPP__
 
 #include "protocol.hpp"
 
 #include <Arduino.h>
 
-class XBee
+class MyXBee
 {
     private:
         String formattedData;
@@ -15,8 +15,9 @@ class XBee
         float scratch[100];
 
     public:
-        XBee();
-        ~XBee();
+        MyXBee();
+        ~MyXBee();
+        void init();
         void transmit(state*);
         void setCachedData();
         int getModeFromGC();

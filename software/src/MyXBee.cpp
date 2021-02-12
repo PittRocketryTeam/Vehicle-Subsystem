@@ -1,17 +1,24 @@
-#include "XBee.hpp"
+#include "MyXBee.hpp"
 #include "Error.hpp"
 #include <cstring>
 
-XBee::XBee() :
+MyXBee::MyXBee() :
     mode(-1),
     cycle(0)
+{
+
+}
+
+MyXBee::~MyXBee() {}
+
+void MyXBee::init()
 {
     memset(buffer, 0, 100);
     Serial4.begin(9600); //Serial4 is used for the PCB
     int i;
     for (i = 0; i < CONN_ATTEMPTS; i++)
     {
-        Error::on(TX_INIT);
+        //Error::on(TX_INIT);
         if (Serial4.available())
         {
             break;
@@ -21,13 +28,11 @@ XBee::XBee() :
     }
     if (i == CONN_ATTEMPTS)
     {
-        Error::display(TX_INIT, FATAL);
+        //Error::display(TX_INIT, FATAL);
     }
 }
 
-XBee::~XBee() {}
-
-void XBee::transmit(state* st)
+void MyXBee::transmit(state* st)
 {
     int id;
     int len;
@@ -60,7 +65,7 @@ void XBee::transmit(state* st)
     Serial4.write(buffer, len + 4);
 }
 
-/*void XBee::setCachedData(Data newData)
+/*void MyXBee::setCachedData(Data newData)
 {
     formattedData = "";
 
@@ -90,7 +95,7 @@ void XBee::transmit(state* st)
     //formattedData += "";
 }*/
 
-/*(Data XBee::receive()
+/*(Data MyXBee::receive()
 {
     if (Serial4.available())
     {
@@ -109,7 +114,7 @@ void XBee::transmit(state* st)
     return d;
 }*/
 
-int XBee::getModeFromGC()
+int MyXBee::getModeFromGC()
 {
     return mode;    
 }

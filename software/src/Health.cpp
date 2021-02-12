@@ -1,4 +1,10 @@
 #include "Health.hpp"
+#include "config.hpp"
+
+static float calculate_current(int raw)
+{
+    return 0.f;
+}
 
 Health::Health() :
     Sensor(),
@@ -20,10 +26,9 @@ void Health::init()
 {
     analogReadResolution(10);
     analogReference(0);
-    pinMode(BATT_T, INPUT);
-    pinMode(BATT_V, INPUT);
-    pinMode(REG5_V, INPUT);
-    pinMode(REG3_V, INPUT);
+    pinMode(THER, INPUT);
+    pinMode(RDIV, INPUT);
+    pinMode(HALL, INPUT);
 }
 
 
@@ -35,6 +40,8 @@ void Health::read(state* st)
     }
 
     st->vbat = battery_voltage;
+    st->ibat = battery_current;
+    st->tbat = battery_temperature;
 
     /*data.healthData.main_battery_temperature = battery_temperature;
     data.healthData.main_battery_voltage = battery_voltage;
@@ -44,18 +51,18 @@ void Health::read(state* st)
 
 void Health::poll(state* st)
 {
-    int battery_t_raw = analogRead(BATT_T);
-    int battery_v_raw = analogRead(BATT_V);
-    int reg5_v_raw = analogRead(REG5_V);
-    int reg3_v_raw = analogRead(REG3_V);
+    int battery_t_raw = analogRead(THER);
+    int battery_v_raw = analogRead(RDIV);
+    int cur_raw = analogRead(HALL);
 
     (void)battery_t_raw; // squash pesky warnings
 
-    //battery_temperature = calculate_temperature(battery_t_raw, THERMISTOR_BETA);
-
+    battery_temperature = calculate_temperature(battery_t_raw, THERMISTOR_BETA);
     battery_voltage = calculate_voltage(battery_v_raw, MOHM, .470 * MOHM);
-    reg5_voltage = calculate_voltage(reg5_v_raw, MOHM, MOHM);
-    reg3_voltage = calculate_voltage(reg3_v_raw, MOHM, MOHM);
+    battery_current = calculate_current(cur_raw);
+    //reg5_voltage = calculate_voltage(reg5_v_raw, MOHM, MOHM);
+    //reg3_voltage = calculate_voltage(reg3_v_raw, MOHM, MOHM);
+
 
     read(st);
 }
@@ -69,6 +76,7 @@ void Health::disable()
 {
     enabled = false;
 }
+
 
 float Health::calculate_voltage(int raw, float r1, float r2)
 {

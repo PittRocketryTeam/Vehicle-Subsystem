@@ -50,18 +50,11 @@ class Logger
 
         static time_t getTeensy3Time();
 
-        //SdFat SD;
-
-        // Timer variables
-        time_t current_time;
-        bool RTC_set_successfully;
-
-        /**
-         * Logfile name.
-        */
+        state snapshot[100];
+        state* snp;
         char filename[128];
-        char buffer[1000];
-        //FsFile handle;
+        char buffer[8192];
+        char* bp;
         File handle;
 };
 

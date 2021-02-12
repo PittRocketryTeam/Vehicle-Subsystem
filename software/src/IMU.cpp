@@ -5,8 +5,6 @@
 
 IMU::IMU()
 {
-    sensor = Adafruit_BNO055(55, IMU_ADDR, &Wire1);
-    verbose = false;
     //last_data = new Data;
 }
 
@@ -17,9 +15,11 @@ IMU::~IMU()
 
 void IMU::init()
 {
+    sensor = Adafruit_BNO055(55, IMU_ADDR, &Wire1);
+    verbose = false;
 
     int i;
-    for (i = 0; i < CONN_ATTEMPTS; ++i)
+    for (i = 0; i < 5; ++i)
     {
         Error::on(IMU_INIT);
         if (sensor.begin())
@@ -31,7 +31,7 @@ void IMU::init()
         {
             Serial.println("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
         }
-        delay(CONN_DELAY);
+        //delay(CONN_DELAY);
     }
     Error::off();
     if (i >= CONN_ATTEMPTS)

@@ -1,6 +1,7 @@
 #include "config.hpp"
 #include "Logger.hpp"
 #include "Error.hpp"
+#include <cstring>
 
 const int chipSelect = BUILTIN_SDCARD;
 
@@ -16,6 +17,8 @@ Logger::~Logger()
 
 bool Logger::init()
 {
+    snp = snapshot;
+    bp = buffer;
     // Initialize RTC
     /*setSyncProvider(getTeensy3Time);
     delay(100);
@@ -147,35 +150,92 @@ void Logger::genUniqueFn()
 
 void Logger::write(state* st)
 {
-    if (handle)
-    {
-        handle.printf(
-            "%ld,%d,,%f,%f,%f,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
-            st->ts,
-            st->fcmode,
+    /*int wr = sprintf(bp, 
+        "%ld,%d,,%f,%f,%f,,%f,%f,%f,,%f,%f,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
+        st->ts,
+        st->fcmode,
 
-            st->altitude,
-            st->pressure,
-            st->temp,
-            
-            st->ax,
-            st->ay,
-            st->az,
-            st->wx,
-            st->wy,
-            st->wz,
-            st->qx,
-            st->qy,
-            st->qz,
-            st->qw);
+        st->vbat,
+        st->ibat,
+        st->tbat,
+
+        st->altitude,
+        st->pressure,
+        st->temp,
+
+        st->lon,
+        st->lat,
+        
+        st->ax,
+        st->ay,
+        st->az,
+        st->wx,
+        st->wy,
+        st->wz,
+        st->qx,
+        st->qy,
+        st->qz,
+        st->qw
+    );
+
+    bp += wr;
+    if ((bp - buffer) > 6144)
+    {
+        Serial.println("f");
+        flush();
+        bp = buffer;
+        memset(buffer,0,8192);
+    }*/
+
+    Serial.println((int)(snp - snapshot));
+    memcpy(snp, st, sizeof(state));
+    ++snp;
+    if ((snp - snapshot) >= 100)
+    {
+        flush();
+        snp = snapshot;
     }
 }
 
 void Logger::flush()
 {
+    Serial.println("f");
     if (!handle)
     {
         return;
+    }
+
+    //handle.printf("%s", buffer);
+    for (int i = 0; i < 100; ++i)
+    {
+        state* st = &snapshot[i];
+        handle.printf( 
+        "%ld,%d,,%f,%f,%f,,%f,%f,%f,,%f,%f,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
+        st->ts,
+        st->fcmode,
+
+        st->vbat,
+        st->ibat,
+        st->tbat,
+
+        st->altitude,
+        st->pressure,
+        st->temp,
+
+        st->lon,
+        st->lat,
+        
+        st->ax,
+        st->ay,
+        st->az,
+        st->wx,
+        st->wy,
+        st->wz,
+        st->qx,
+        st->qy,
+        st->qz,
+        st->qw
+    );
     }
     handle.flush();
 }

@@ -17,6 +17,16 @@ bool Error::init()
     pinMode(DEBUG_LED_2, OUTPUT);
     pinMode(DEBUG_LED_3, OUTPUT);
 
+    digitalWrite(DEBUG_LED_1, HIGH);
+    delay(1000);
+    digitalWrite(DEBUG_LED_2, HIGH);
+    delay(1000);
+    digitalWrite(DEBUG_LED_3, HIGH);
+    delay(1000);
+    digitalWrite(DEBUG_LED_1, LOW);
+    digitalWrite(DEBUG_LED_2, LOW);
+    digitalWrite(DEBUG_LED_3, LOW);
+
     return true;
 }
 
@@ -71,14 +81,14 @@ void Error::on(int ec)
 
 void Error::on()
 {
-    analogWrite(DEBUG_LED_1, 1023 * b0);
+    digitalWrite(DEBUG_LED_1, b0);
     digitalWrite(DEBUG_LED_2, b1);
     digitalWrite(DEBUG_LED_3, b2);
 }
 
 void Error::off()
 {
-    analogWrite(DEBUG_LED_1, 0);
+    digitalWrite(DEBUG_LED_1, LOW);
     digitalWrite(DEBUG_LED_2, LOW);
     digitalWrite(DEBUG_LED_3, LOW);
 }
@@ -108,7 +118,7 @@ void Error::success()
 
         if (last == 0)
         {
-            analogWrite(leds[last], 0);
+            digitalWrite(leds[last], 0);
         }
         else
         {
@@ -117,7 +127,7 @@ void Error::success()
 
         if (cur == 0)
         {
-            analogWrite(leds[cur], 1023);
+            digitalWrite(leds[cur], 1023);
         }
         else
         {
@@ -131,7 +141,7 @@ void Error::success()
 
     if (cur == 0)
     {
-        analogWrite(leds[cur], 0);
+        digitalWrite(leds[cur], 0);
     }
     else
     {
