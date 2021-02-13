@@ -49,7 +49,7 @@ void MyXBee::transmit(state* st)
     int id;
     int len;
     // send periodic data
-    if (cycle % 10 == 0) // send health data
+    /*if (cycle % 10 == 0) // send health data
     {
 
     }
@@ -72,7 +72,7 @@ void MyXBee::transmit(state* st)
     if (cycle == 10)
     {
         cycle = 0;
-    }
+    }*/
 
     /*Serial2.write('S');
     Serial2.write('O');

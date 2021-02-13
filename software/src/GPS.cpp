@@ -52,7 +52,7 @@ void GPS::init()
         Error::display(WERE_SCREWED, FATAL);
     }
 
-    while (!gps.available())
+    /*while (!gps.available())
     {
         Error::on(GPS_INIT);
         err++;
@@ -64,7 +64,7 @@ void GPS::init()
             Error::display(GPS_INIT, FATAL);
             break;
         }
-    }
+    }*/
     Error::off();
     
     // uncomment this line to turn on RMC (recommended minimum) and GGA (fix data) including altitude
@@ -101,7 +101,7 @@ void GPS::read(state* st)
 
 void GPS::poll(state* st)
 {
-    if (gps.newNMEAreceived())
+    //if (gps.newNMEAreceived())
     {
         //Error::on(WERE_SCREWED);
         gps.parse(gps.lastNMEA());

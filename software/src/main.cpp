@@ -8,8 +8,8 @@
 #include "Altimeter.hpp"
 #include "Event.hpp"
 
-#define GPS_PR_SLOW 1'000'000
-#define GPS_PR_FAST 1'000'000
+#define GPS_PR_SLOW 1'000
+#define GPS_PR_FAST 1'000
 #define TRX_PR_SLOW 2'000'000
 #define TRX_PR_FAST 250'000
 #define SNR_PR_SLOW 250'000
@@ -70,7 +70,9 @@ void serial_init()
 void gps_read_callback()
 {
     noInterrupts();
+    digitalWrite(DEBUG_LED_1, HIGH);
     gps.internal_read();
+    digitalWrite(DEBUG_LED_1, LOW);
     interrupts();
 }
 
@@ -213,10 +215,11 @@ void loop()
         ag.poll(&st);
         alt.poll(&st);
         hlt.poll(&st);
+        //gps.internal_read();
         gps.poll(&st);
 
         lgr.write(&st);
-        trx.transmit(&st);
+        //trx.transmit(&st);
 
         poll = false;
     }
