@@ -210,7 +210,7 @@ void Logger::flush()
     {
         state* st = &snapshot[i];
         handle.printf( 
-        "%ld,%d,,%f,%f,%f,,%f,%f,%f,,%f,%f,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
+        "%ld,%d,,%f,%f,%f,,%f,%f,%f,,%f,%f,%d,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
         st->ts,
         st->fcmode,
 
@@ -224,6 +224,7 @@ void Logger::flush()
 
         st->lon,
         st->lat,
+        st->nsats,
         
         st->ax,
         st->ay,

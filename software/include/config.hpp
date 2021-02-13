@@ -20,6 +20,4 @@
 #define GPS_ENABLE -1
 #define GPS_SERIAL Serial1
 
-#define IMU_ADDR 0x00 // TODO
-
 #endif /* PINS_HPP */

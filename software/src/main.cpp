@@ -12,7 +12,7 @@
 #define GPS_PR_FAST 1'000'000
 #define TRX_PR_SLOW 2'000'000
 #define TRX_PR_FAST 250'000
-#define SNR_PR_SLOW 1'000'000
+#define SNR_PR_SLOW 250'000
 #define SNR_PR_FAST 1'000
 #define LOG_PR_SLOW 4'000'000
 #define LOG_PR_FAST 1'000'000
@@ -38,6 +38,7 @@ volatile bool write = false;
 volatile bool flush = false;
 volatile bool poll = false;
 volatile bool lg;
+volatile bool send = false;
 
 static bool transition = false;
 
@@ -83,7 +84,7 @@ void lgr_flush_callback()
 void trx_send_callback()
 {
     noInterrupts();
-    
+    send = true;
     interrupts();
 }
 
@@ -112,6 +113,7 @@ void setup()
     alt.init();
     gps.init();
     hlt.init();
+    Serial.println("try init trx");
     trx.init();
     Serial.println("ALL SENSORS READY");
 
@@ -214,5 +216,15 @@ void loop()
         gps.poll(&st);
 
         lgr.write(&st);
+        trx.transmit(&st);
+
+        poll = false;
+    }
+
+    if (send)
+    {
+        trx.transmit(&st);
+        Serial.println("tx");
+        send = false;
     }
 }

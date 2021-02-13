@@ -13,27 +13,39 @@ MyXBee::~MyXBee() {}
 
 void MyXBee::init()
 {
+    Serial.println("myxbee\n");
     memset(buffer, 0, 100);
-    Serial4.begin(9600); //Serial4 is used for the PCB
+    Serial2.begin(9600); //Serial2 is used for the PCB
+    delay(500);
     int i;
     for (i = 0; i < CONN_ATTEMPTS; i++)
     {
-        //Error::on(TX_INIT);
-        if (Serial4.available())
+        Error::on(TX_INIT);
+        if (Serial2)
         {
             break;
         }
 
+        Serial.println("fail");
+
         delay(CONN_DELAY);
     }
+    Error::off();
     if (i == CONN_ATTEMPTS)
     {
-        //Error::display(TX_INIT, FATAL);
+        Error::display(TX_INIT, FATAL);
     }
+
+    Serial.println("commandmode");
+    delay(1000);
+    Serial2.print("+++");
+    delay(12000);
+    Serial.println("done!");
 }
 
 void MyXBee::transmit(state* st)
 {
+    digitalWrite(13, HIGH);
     int id;
     int len;
     // send periodic data
@@ -62,7 +74,20 @@ void MyXBee::transmit(state* st)
         cycle = 0;
     }
 
-    Serial4.write(buffer, len + 4);
+    /*Serial2.write('S');
+    Serial2.write('O');
+    Serial2.write('A');
+    Serial2.write('R');
+    Serial2.write(buffer, len + 4);
+    Serial2.write('S');
+    Serial2.write('O');
+    Serial2.write('A');
+    Serial2.write('R');
+    Serial2.flush();*/
+
+    Serial2.println("hello world\n");
+    delay(100);
+    digitalWrite(13, LOW);
 }
 
 /*void MyXBee::setCachedData(Data newData)
@@ -97,9 +122,9 @@ void MyXBee::transmit(state* st)
 
 /*(Data MyXBee::receive()
 {
-    if (Serial4.available())
+    if (Serial2.available())
     {
-        mode = Serial4.read() == 'b';
+        mode = Serial2.read() == 'b';
         Serial.println(mode);
         delay(500);
         //Serial.println("\t\tyep");
