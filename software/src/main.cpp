@@ -10,8 +10,8 @@
 
 #define GPS_PR_SLOW 1'000
 #define GPS_PR_FAST 1'000
-#define TRX_PR_SLOW 2'000'000
-#define TRX_PR_FAST 250'000
+#define TRX_PR_SLOW 1'000'000
+#define TRX_PR_FAST 125'000
 #define SNR_PR_SLOW 250'000
 #define SNR_PR_FAST 1'000
 #define LOG_PR_SLOW 4'000'000
@@ -56,7 +56,7 @@ void serial_init()
 
         digitalWrite(13, HIGH);
         Error::on(SERIAL_INIT);
-        delay(CONN_DELAY);
+        //delay(CONN_DELAY);
         digitalWrite(13, LOW);
         delay(CONN_DELAY);
     }
@@ -129,7 +129,7 @@ void setup()
 
     gps_int.begin(gps_read_callback, GPS_PR_SLOW);
     lgr_int.begin(lgr_flush_callback, LOG_PR_SLOW);
-    trx_int.begin(trx_send_callback, TRX_PR_SLOW);
+    trx_int.begin(trx_send_callback, TRX_PR_FAST);
     snr_int.begin(snr_poll_callback, SNR_PR_SLOW);
 }
 
@@ -226,8 +226,10 @@ void loop()
 
     if (send)
     {
+        noInterrupts();
         trx.transmit(&st);
-        Serial.println("tx");
+        //Serial.println("tx");
         send = false;
+        interrupts();
     }
 }

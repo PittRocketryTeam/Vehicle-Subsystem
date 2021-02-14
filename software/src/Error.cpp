@@ -18,11 +18,11 @@ bool Error::init()
     pinMode(DEBUG_LED_3, OUTPUT);
 
     digitalWrite(DEBUG_LED_1, HIGH);
-    delay(1000);
+    delay(200);
     digitalWrite(DEBUG_LED_2, HIGH);
-    delay(1000);
+    delay(200);
     digitalWrite(DEBUG_LED_3, HIGH);
-    delay(1000);
+    delay(200);
     digitalWrite(DEBUG_LED_1, LOW);
     digitalWrite(DEBUG_LED_2, LOW);
     digitalWrite(DEBUG_LED_3, LOW);

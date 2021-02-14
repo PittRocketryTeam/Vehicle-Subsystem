@@ -4,8 +4,7 @@
 #define MOHM 1e6
 #define KOHM 1e3
 #define THERMISTOR_T0 298.15
-#define THERMISTOR_BETA 3380.0
-#define ANALOG_MAX 1023
+#define ANALOG_MAX 4096
 
 #include "Sensor.hpp"
 #include "protocol.hpp"
@@ -24,8 +23,8 @@ class Health : public Sensor
         virtual void disable();
 
     private:
-        float calculate_voltage(int, float, float);
-        float calculate_temperature(int, float);
+        //float calculate_voltage(int, float, float);
+        //float calculate_temperature(int, float);
 
         float battery_temperature;
         float battery_voltage;

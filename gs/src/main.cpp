@@ -4,10 +4,13 @@ static char buffer[8192];
 static char* bp;
 static bool pkt;
 static bool send;
+static char peek[5];
+static char* peek_p;
 
 void setup()
 {
     pkt = false;
+    peek_p = peek;
     send = false;
     bp = buffer;
     *bp = 0;
@@ -35,54 +38,46 @@ void setup()
     }
     delay(1000);
 
-    Serial.println("commandmode");
+    /*Serial.println("commandmode");
     delay(1000);
     Serial1.print("+++");
     delay(12000);
-    Serial.println("done!");
+    Serial.println("done!");*/
 }
 
 void loop()
 {
     //while (Serial1.available())
-    if (Serial1.available())
+    char e = '\n';
+    while (Serial1.available())
     {
-        digitalWrite(13, HIGH);
-        Serial.println(Serial1.readString());
-        //Serial1.println("hello world\n");
-        delay(100);
-        digitalWrite(13, LOW);
-        delay(100);
-        /**bp = Serial.read();
+        int ch = Serial1.read();
+        *bp = ch;
         ++bp;
         *bp = 0;
-
+        
         if (!pkt)
         {
-            if ((bp - buffer) == 4)
+            if ((bp - buffer) >= 4 && !strncmp(bp - 4, "SBEG", 4))
             {
-                if (strcmp(buffer, "SOAR") == 0)
-                {
-                    pkt = true;
-                    bp = buffer;
-                    *bp = 0;
-                }
+                //Serial.println("begin");
+                pkt = true;
+                bp = buffer;
             }
         }
         else
         {
-            if ((bp - buffer) == 4)
+            if ((bp - buffer) >= 4 && !strncmp(bp - 4, "SFIN", 4))
             {
-                if (strcmp(buffer, "SOAR") == 0)
-                {
-                    Serial.write(buffer, (bp - buffer));
-                    pkt = false;
-                    bp = buffer;
-                    *bp = 0;
-                    
-                }
+                //Serial.println("end");
+                int len = ((bp - 4) - buffer);
+                //Serial.println(len);
+                Serial.write(buffer, len);
+                Serial.write("\r\n");
+                pkt = false;
+                bp = buffer;
             }
-        }*/
+        }
     }
     //else
     {

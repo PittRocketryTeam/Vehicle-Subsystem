@@ -36,20 +36,20 @@ void MyXBee::init()
         Error::display(TX_INIT, FATAL);
     }
 
-    Serial.println("commandmode");
+    /*Serial.println("commandmode");
     delay(1000);
     Serial2.print("+++");
     delay(12000);
-    Serial.println("done!");
+    Serial.println("done!");*/
 }
 
 void MyXBee::transmit(state* st)
 {
     digitalWrite(13, HIGH);
-    int id;
-    int len;
+    int id = 5;
+    int len = 0;
     // send periodic data
-    /*if (cycle % 10 == 0) // send health data
+    if (cycle % 10 == 0) // send health data
     {
 
     }
@@ -64,7 +64,7 @@ void MyXBee::transmit(state* st)
         *(int*)(buffer) = len;
         *(int*)(buffer + 4) = id;
         get_orientation(st, scratch);
-        memcpy(buffer + 8, scratch, 12 * sizeof(float));
+        memcpy(buffer + 8, scratch, 13 * sizeof(float));
     }
 
     // reset cycle counter
@@ -72,21 +72,25 @@ void MyXBee::transmit(state* st)
     if (cycle == 10)
     {
         cycle = 0;
-    }*/
+    }
 
-    /*Serial2.write('S');
-    Serial2.write('O');
-    Serial2.write('A');
-    Serial2.write('R');
-    Serial2.write(buffer, len + 4);
     Serial2.write('S');
-    Serial2.write('O');
-    Serial2.write('A');
-    Serial2.write('R');
-    Serial2.flush();*/
+    Serial2.write('B');
+    Serial2.write('E');
+    Serial2.write('G');
+    Serial2.write(buffer, len + sizeof(float));
+    Serial2.write('S');
+    Serial2.write('F');
+    Serial2.write('I');
+    Serial2.write('N');
+    //Serial2.write('\r');
+    Serial2.flush();
 
-    Serial2.println("hello world\n");
-    delay(100);
+    //Serial2.write(0x42);
+    //Serial2.write(0x0D);
+    //Serial2.println("hello world more strimg more string");
+    //Serial2.flush();
+    //delay(100);
     digitalWrite(13, LOW);
 }
 
