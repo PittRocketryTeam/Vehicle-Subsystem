@@ -13,6 +13,7 @@ class MyXBee
         int cycle;
         unsigned char buffer[100];
         float scratch[100];
+        char notify;
 
     public:
         MyXBee();
@@ -22,6 +23,7 @@ class MyXBee
         void setCachedData();
         int getModeFromGC();
         void receive();
+        char checkForCommand();
 };
 
 #endif

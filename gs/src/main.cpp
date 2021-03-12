@@ -37,17 +37,10 @@ void setup()
         delay(100);
     }
     delay(1000);
-
-    /*Serial.println("commandmode");
-    delay(1000);
-    Serial1.print("+++");
-    delay(12000);
-    Serial.println("done!");*/
 }
 
 void loop()
 {
-    //while (Serial1.available())
     char e = '\n';
     while (Serial1.available())
     {
@@ -82,5 +75,10 @@ void loop()
     //else
     {
         digitalWrite(13, LOW);
+    }
+
+    while (Serial.available())
+    {
+        Serial.write(Serial.read());
     }
 }

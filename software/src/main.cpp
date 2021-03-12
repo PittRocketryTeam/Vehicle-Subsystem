@@ -166,7 +166,25 @@ void startup()
 }
 
 void loop()
-{   
+{
+    if ((cmd = trx.checkForCommand()) > 0)
+    {
+        switch (cmd)
+        {
+            case 's':
+            transition = true;
+            mode = FCSTARTUP;
+            break;
+
+            case 'i':
+            transition = true;
+            mode = FCIDLE;
+            break;
+
+            default:
+            break;
+        }
+    }
     if (transition)
     {
         transition = false;

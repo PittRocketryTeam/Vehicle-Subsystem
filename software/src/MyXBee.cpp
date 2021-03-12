@@ -45,12 +45,22 @@ void MyXBee::init()
 
 void MyXBee::transmit(state* st)
 {
-    digitalWrite(13, HIGH);
+    //digitalWrite(13, HIGH);
+    
     int id = 5;
     int len = 0;
     // send periodic data
     if (cycle % 10 == 0) // send health data
     {
+        len = 6 * sizeof(float);
+        *(int*)(buffer + 0) = len;
+        *(int*)(buffer + 4) = 4;
+        *(float*)(buffer + 8) = st->vbat;
+        *(float*)(buffer + 12) = st->ibat;
+        *(float*)(buffer + 16) = st->tbat;
+        *(float*)(buffer + 20) = st->temp;
+
+        memcpy(buffer + 8, scratch, (len - 1) * sizeof(float));
 
     }
     else if ((cycle + 1) % 10 == 0) // send flight evets
@@ -62,9 +72,9 @@ void MyXBee::transmit(state* st)
         len = 14 * sizeof(float);
 
         *(int*)(buffer) = len;
-        *(int*)(buffer + 4) = id;
+        *(int*)(buffer + 4) = 5;
         get_orientation(st, scratch);
-        memcpy(buffer + 8, scratch, 13 * sizeof(float));
+        memcpy(buffer + 8, scratch, (len - 1) * sizeof(float));
     }
 
     // reset cycle counter
@@ -86,12 +96,12 @@ void MyXBee::transmit(state* st)
     //Serial2.write('\r');
     Serial2.flush();
 
-    //Serial2.write(0x42);
-    //Serial2.write(0x0D);
-    //Serial2.println("hello world more strimg more string");
-    //Serial2.flush();
-    //delay(100);
-    digitalWrite(13, LOW);
+    //digitalWrite(13, LOW);
+
+    if (Serial2.available())
+    {
+        notify = Serial2.read();
+    }
 }
 
 /*void MyXBee::setCachedData(Data newData)
@@ -146,4 +156,11 @@ void MyXBee::transmit(state* st)
 int MyXBee::getModeFromGC()
 {
     return mode;    
+}
+
+char MyXBee::checkForCommand()
+{
+    char out = notify;
+    notify = '\0';
+    return out;
 }
