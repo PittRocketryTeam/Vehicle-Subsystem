@@ -28,6 +28,7 @@ static Altimeter alt;
 static Health hlt;
 static fcmode_t mode = FCIDLE;
 static Event evt;
+static char cmd;
 
 static IntervalTimer gps_int;
 static IntervalTimer lgr_int;

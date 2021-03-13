@@ -52,6 +52,7 @@ void MyXBee::transmit(state* st)
     // send periodic data
     if (cycle % 10 == 0) // send health data
     {
+        //delay(100);
         len = 6 * sizeof(float);
         *(int*)(buffer + 0) = len;
         *(int*)(buffer + 4) = 4;
@@ -59,9 +60,7 @@ void MyXBee::transmit(state* st)
         *(float*)(buffer + 12) = st->ibat;
         *(float*)(buffer + 16) = st->tbat;
         *(float*)(buffer + 20) = st->temp;
-
-        memcpy(buffer + 8, scratch, (len - 1) * sizeof(float));
-
+        *(int*)(buffer + 24) = st->nsats;
     }
     else if ((cycle + 1) % 10 == 0) // send flight evets
     {

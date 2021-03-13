@@ -83,15 +83,14 @@ void Health::poll(state* st)
     st->tbat = calculate_temperature(battery_t_raw, 3539);
     st->ibat = calculate_current(cur_raw);
 
-    Serial.printf("%f,%f,%f\n", st->vbat, st->tbat, st->ibat);
+    //Serial.printf("%f,%f,%f\n", st->vbat, st->tbat, st->ibat);
     //battery_temperature = calculate_temperature(battery_t_raw, THERMISTOR_BETA);
     //battery_voltage = calculate_voltage(battery_v_raw, MOHM, .470 * MOHM);
     //battery_current = calculate_current(cur_raw);
     //reg5_voltage = calculate_voltage(reg5_v_raw, MOHM, MOHM);
     //reg3_voltage = calculate_voltage(reg3_v_raw, MOHM, MOHM);
 
-
-    read(st);
+    //read(st);
 }
 
 void Health::enable()
