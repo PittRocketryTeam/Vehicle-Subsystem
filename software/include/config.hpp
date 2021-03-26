@@ -3,6 +3,10 @@
 
 #include <Arduino.h>
 
+// Teensy Board Version
+//#define TEENSY_36
+#define TEENSY_41
+
 // Options
 #define DEBUG 1
 #define VERBOSE 0
@@ -19,5 +23,11 @@
 
 #define GPS_ENABLE -1
 #define GPS_SERIAL Serial1
+
+#define ALT_I2C_ADDR 0x77
+#define ALT_I2C_BUS Wire
+
+#define IMU_I2C_ADDR 0x28
+#define IMU_I2C_BUS Wire
 
 #endif /* PINS_HPP */

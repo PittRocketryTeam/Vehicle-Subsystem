@@ -15,7 +15,7 @@ IMU::~IMU()
 
 void IMU::init()
 {
-    sensor = Adafruit_BNO055(55, 0x28, &Wire);
+    sensor = Adafruit_BNO055(55, IMU_I2C_ADDR, &IMU_I2C_BUS);
     verbose = false;
 
     int i;
@@ -54,7 +54,7 @@ void IMU::read(state* st)
 
     st->wx = w.x();
     st->wy = w.y();
-    st->wz = w.z();    
+    st->wz = w.z();
 
     st->qx = q.x();
     st->qy = q.y();

@@ -3,7 +3,7 @@
 #include "Error.hpp"
 #include <cstring>
 
-const int chipSelect = BUILTIN_SDCARD;
+int chipSelect = BUILTIN_SDCARD;
 
 Logger::Logger()
 {
@@ -12,7 +12,7 @@ Logger::Logger()
 
 Logger::~Logger()
 {
-    
+
 }
 
 bool Logger::init()
@@ -31,20 +31,20 @@ bool Logger::init()
     {
         Error::on(LOG_INIT);
         Serial.println("try to connect SD card");
-        
-        // pin mapping magic
-        //SPI.setMOSI(7);
-        //SPI.setMISO(8);
-        //int status = SD.begin(62);
-        int status = SD.begin(chipSelect);
 
+#ifdef TEENSY_36
+        // pin mapping magic
+        SPI.setMOSI(7);
+        SPI.setMISO(8);
+        chipSelect = 62; // internal pin
+#endif /* TEENSY_36 */
+        int status = SD.begin(chipSelect);
         if (status)
         {
             break;
         }
 
         // fail
-
         delay(CONN_DELAY * 3);
     }
 
@@ -56,7 +56,7 @@ bool Logger::init()
         Error::display(WERE_SCREWED, FATAL);
         return false;
     }
-    
+
     genUniqueFn();
     handle = SD.open(filename, FILE_WRITE);
 
@@ -77,7 +77,7 @@ void Logger::genUniqueFn()
         bf[r] = '\0';
         log_num = atoi(bf);
         log_num += 1;
-        
+
         handle.close();
         delay(100);
     }
@@ -93,7 +93,7 @@ void Logger::genUniqueFn()
     {
         Serial.println("fatal error");
     }
-    
+
     memset(filename, 0, sizeof(filename));
     sprintf(filename, "LG%d.csv", log_num);
 
@@ -110,30 +110,30 @@ void Logger::genUniqueFn()
     handle.printf("%ld, ,%f,%f,%f, ,%f,%f,%f,%f, ,%f,%f,%f, ,%f,%f,%f, ,%f,\n",
             data.timestamp,
 
-            data.altimeterData.temperature, 
-            data.altimeterData.pressure, 
+            data.altimeterData.temperature,
+            data.altimeterData.pressure,
             data.altimeterData.altitude,
-            
-            // data.gpsData.time, 
-            data.gpsData.latitude, 
-            // data.gpsData.lat_direction, 
-            data.gpsData.longitude, 
-            // data.gpsData.long_direction, 
-            // data.gpsData.fix_quality, 
-            data.gpsData.number_of_satellites, 
-            // data.gpsData.hdop, 
-            data.gpsData.altitude, 
+
+            // data.gpsData.time,
+            data.gpsData.latitude,
+            // data.gpsData.lat_direction,
+            data.gpsData.longitude,
+            // data.gpsData.long_direction,
+            // data.gpsData.fix_quality,
+            data.gpsData.number_of_satellites,
+            // data.gpsData.hdop,
+            data.gpsData.altitude,
             // data.gpsData.rssi,
-            
-            // data.healthData.main_battery_temperature, 
-            // data.healthData.main_battery_voltage, 
-            // data.healthData.reg_5V_battery_temperature, 
-            // data.healthData.reg_5V_battery_voltage, 
-            // data.healthData.reg_3V3_battery_temperature, 
+
+            // data.healthData.main_battery_temperature,
+            // data.healthData.main_battery_voltage,
+            // data.healthData.reg_5V_battery_temperature,
+            // data.healthData.reg_5V_battery_voltage,
+            // data.healthData.reg_3V3_battery_temperature,
             // data.healthData.reg_3V3_battery_voltage,
-            
-            data.imuData.euler_abs_orientation_x, 
-            data.imuData.euler_abs_orientation_y, 
+
+            data.imuData.euler_abs_orientation_x,
+            data.imuData.euler_abs_orientation_y,
             data.imuData.euler_abs_orientation_z,
 
             data.imuData.acceleration_x,
@@ -141,16 +141,16 @@ void Logger::genUniqueFn()
             data.imuData.acceleration_z,
 
             data.healthData.main_battery_voltage
-            
+
            // data.photocellData.brightness
     );
 
-    return true; 
+    return true;
 }*/
 
 void Logger::write(state* st)
 {
-    /*int wr = sprintf(bp, 
+    /*int wr = sprintf(bp,
         "%ld,%d,,%f,%f,%f,,%f,%f,%f,,%f,%f,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
         st->ts,
         st->fcmode,
@@ -165,7 +165,7 @@ void Logger::write(state* st)
 
         st->lon,
         st->lat,
-        
+
         st->ax,
         st->ay,
         st->az,
@@ -187,7 +187,7 @@ void Logger::write(state* st)
         memset(buffer,0,8192);
     }*/
 
-    Serial.println((int)(snp - snapshot));
+    //Serial.println((int)(snp - snapshot));
     memcpy(snp, st, sizeof(state));
     ++snp;
     if ((snp - snapshot) >= 100)
@@ -199,7 +199,7 @@ void Logger::write(state* st)
 
 void Logger::flush()
 {
-    Serial.println("f");
+    //Serial.println("f");
     if (!handle)
     {
         return;
@@ -209,7 +209,7 @@ void Logger::flush()
     for (int i = 0; i < 100; ++i)
     {
         state* st = &snapshot[i];
-        handle.printf( 
+        handle.printf(
         "%ld,%d,,%f,%f,%f,,%f,%f,%f,,%f,%f,%d,,%f,%f,%f,%f,%f,%f,%f,%f,%f,%f\n",
         st->ts,
         st->fcmode,
@@ -225,7 +225,7 @@ void Logger::flush()
         st->lon,
         st->lat,
         st->nsats,
-        
+
         st->ax,
         st->ay,
         st->az,

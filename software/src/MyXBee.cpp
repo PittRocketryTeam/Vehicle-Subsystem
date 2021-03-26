@@ -13,7 +13,7 @@ MyXBee::~MyXBee() {}
 
 void MyXBee::init()
 {
-    Serial.println("myxbee\n");
+    //Serial.println("myxbee\n");
     memset(buffer, 0, 100);
     Serial2.begin(9600); //Serial2 is used for the PCB
     delay(500);
@@ -26,7 +26,7 @@ void MyXBee::init()
             break;
         }
 
-        Serial.println("fail");
+        //Serial.println("fail");
 
         delay(CONN_DELAY);
     }
@@ -46,7 +46,7 @@ void MyXBee::init()
 void MyXBee::transmit(state* st)
 {
     //digitalWrite(13, HIGH);
-    
+
     int id = 5;
     int len = 0;
     // send periodic data
@@ -146,7 +146,7 @@ void MyXBee::transmit(state* st)
     {
         ///Serial.println("nope");
     }
-    
+
 
     Data d;
     return d;
@@ -154,7 +154,7 @@ void MyXBee::transmit(state* st)
 
 int MyXBee::getModeFromGC()
 {
-    return mode;    
+    return mode;
 }
 
 char MyXBee::checkForCommand()
