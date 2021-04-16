@@ -44,6 +44,7 @@ typedef struct _state
     float anet_buf[5];
     int anet_buf_pos;
     float anet;
+
 } state;
 
 typedef struct _HEALTH_PKT // voltages, current draw

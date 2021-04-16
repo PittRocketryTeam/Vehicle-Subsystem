@@ -16,6 +16,7 @@
 #define DEBUG_LED_1 41
 #define DEBUG_LED_2 40
 #define DEBUG_LED_3 39
+#define DEPLOY_SIGNAL_WIRE 38
 
 #define THER A7
 #define RDIV A8

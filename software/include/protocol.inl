@@ -47,6 +47,17 @@ inline float avg_vy(state* st)
     return sum / (float)5;
 }
 
+inline float avg_alt(state* st)
+{
+    float sum = 0;
+    for (int i = 0; i < 5; ++i)
+    {
+        sum += st->alt_buf[i];
+    }
+
+    return sum / (float)5;
+}
+
 inline float anet(state* st)
 {
     return sqrt(st->ax * st->ax + st->ay * st->ay + st->az * st->az);
